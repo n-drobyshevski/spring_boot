@@ -1,0 +1,22 @@
+.regist {
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 380px;
+}
+.form-group{
+    width: 450px;
+}
+
+h1{
+    text-align: center;
+    margin-top: 50px;
+}
+.ss {
+    position: absolute;
+    bottom: 200px;
+}
+.btn-dark{
+    margin-top: 20px;
+}

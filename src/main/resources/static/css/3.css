@@ -1,0 +1,19 @@
+.payment-button {
+    background-color: #04AA6D; /* Зеленый цвет фона */
+    border: none;
+    color: white; /* Белый цвет текста */
+    padding: 10px 20px; /* Внутренние отступы */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.payment-button:hover {
+    background-color: #008CBA; /* Изменение цвета фона при наведении */
+}
+
+.payment-button:active {
+    background-color: #f44336; /* Изменение цвета фона при нажатии */
+}

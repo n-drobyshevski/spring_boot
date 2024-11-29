@@ -1,0 +1,51 @@
+body {
+    background-color: #ffffff;
+    font-family: Arial, sans-serif; /* Изменение шрифта */
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background-color: #ffffff;
+}
+
+th, td {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+h1 {
+    text-align: center;
+}
+
+h4 {
+    text-align: center;
+}
+a {
+    color: #000000; /* Изменение цвета ссылок */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+
+/* Стилизация кнопок */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+input[type="submit"], button {
+    background-color: #ff0000; /* Изменение цвета фона кнопок */
+    color: #ffffff; /* Изменение цвета текста кнопок */
+    border: none; /* Убираем границу кнопок */
+    padding: 8px 16px; /* Изменение отступов вокруг текста кнопок */
+    cursor: pointer; /* Изменение курсора при наведении на кнопки */
+    border-radius: 4px; /* Скругление углов кнопок */
+}
+
+input[type="submit"]:hover, button:hover {
+    background-color: #ff8975; /* Изменение цвета фона кнопок при наведении */
+}
