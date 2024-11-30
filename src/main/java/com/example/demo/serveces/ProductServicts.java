@@ -25,9 +25,15 @@ ProductServicts {
     public final TovarRepository tovarRepository;
     private final UserRepository userRepository;
 
-    public List<Tovar> listTovar(String title){
-        if(title != null) return tovarRepository.findByTitle(title);
-        return tovarRepository.findAll();
+    public List<Tovar> listTovar(String title) {
+        List<Tovar> products;
+        if (title != null && !title.isEmpty()) {
+            products = tovarRepository.findByTitleContainingIgnoreCase(title);
+        } else {
+            products = tovarRepository.findAll();
+        }
+        log.info("Found {} products with title containing '{}'", products.size(), title);
+        return products;
     }
 
     public void saveTovar(Principal principal,Tovar product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {

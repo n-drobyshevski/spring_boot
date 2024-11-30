@@ -1,6 +1,5 @@
 package com.example.demo.serveces;
 
-
 import com.example.demo.models.User;
 import com.example.demo.models.enums.Role;
 import com.example.demo.repositories.UserRepository;
@@ -13,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +28,8 @@ public class UserService {
 
     public boolean createUser(User user) {
         String userEmail = user.getEmail();
-        if (userRepository.findByEmail(userEmail) != null) return false;
+        if (userRepository.findByEmail(userEmail) != null)
+            return false;
         user.setActive(true);
         user.getRoles().add(Role.ROLE_USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -36,9 +37,11 @@ public class UserService {
         userRepository.save(user);
         return true;
     }
+
     public List<User> list() {
         return userRepository.findAll();
     }
+
     public void banUser(Long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
@@ -52,6 +55,7 @@ public class UserService {
         }
         userRepository.save(user);
     }
+
     public void changeUserRoles(User user, Map<String, String> form) {
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)
@@ -64,32 +68,55 @@ public class UserService {
         }
         userRepository.save(user);
     }
-//    public  void writeToFile(String id){
-//        try {
-//            FileWriter writer = new FileWriter("file.txt");
-//            writer.write(id);
-//            writer.close();
-//        } catch (IOException e) {
-//            System.out.println("An error occurred while writing to the file.");
-//            e.printStackTrace();
-//        }
-//    }
-//    public int read(){
-//        try {
-//            BufferedReader reader = new BufferedReader(new FileReader("file.txt"));
-//            String line;
-//            while ((line = reader.readLine()) != null) {
-//                System.out.println(line);
-//                return Integer.valueOf(line);
-//            }
-//            reader.close();
-//        } catch (IOException e) {
-//            System.out.println("An error occurred while reading the file.");
-//            e.printStackTrace();
-//
-//        }
-//        return 0;
-//    }
+
+    public String getUserRole(Principal principal) {
+        if (principal == null) {
+            log.warn("Principal is null, user is not authenticated");
+            return null;
+        }
+
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) {
+            log.warn("User not found with email: {}", email);
+            return null;
+        }
+
+        if (user.getRoles().isEmpty()) {
+            log.warn("User with email: {} has no roles assigned", email);
+            return null;
+        }
+
+        String role = user.getRoles().iterator().next().name();
+        log.info("User with email: {} has role: {}", email, role);
+        return role;
+    }
+
+    // public void writeToFile(String id){
+    // try {
+    // FileWriter writer = new FileWriter("file.txt");
+    // writer.write(id);
+    // writer.close();
+    // } catch (IOException e) {
+    // System.out.println("An error occurred while writing to the file.");
+    // e.printStackTrace();
+    // }
+    // }
+    // public int read(){
+    // try {
+    // BufferedReader reader = new BufferedReader(new FileReader("file.txt"));
+    // String line;
+    // while ((line = reader.readLine()) != null) {
+    // System.out.println(line);
+    // return Integer.valueOf(line);
+    // }
+    // reader.close();
+    // } catch (IOException e) {
+    // System.out.println("An error occurred while reading the file.");
+    // e.printStackTrace();
+    //
+    // }
+    // return 0;
+    // }
 }
-
-
