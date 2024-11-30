@@ -57,7 +57,7 @@ public class CartService {
     public void buyCart(Long id){
         List<Cart> userCart = cartRepository.findAllByUser_id(read());
         for (Cart i: userCart){
-            historyRepository.save(new History(i.getId(),i.getNameproduct(),i.getCost(),i.getImage(),i.getUser_id()));
+            historyRepository.save(new History(i.getId(),i.getNameproduct(),i. getCostAsInt(),i.getImage(),i.getUser_id()));
         }
         clearCart(id);
     }

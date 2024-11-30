@@ -41,7 +41,7 @@
 </div>
 <div class="d-flex flex-wrap w-100" style="padding: 0 96px" >
     <#list books as book>
-        <form class="flex-fill" action="/AddToCart" method="post" style="min-width:100px;max-width:25%">
+        <form class="flex-fill" action="/AddToCart" onsubmit="return validateAndFormatCost()" method="post" style="min-width:100px;max-width:25%">
         <div class="d-flex flex-wrap">
                     <div class="card mb-4 mw-20 flex-fill h-100 me-4 bg-blue rounded shadow-sm" style="">
                         <!-- Обёртываем изображение книги ссылкой -->
@@ -60,7 +60,7 @@
                                     <input type="submit" class="btn btn-sm btn-outline-secondary" value="Добавить в корзину">
                                 </div>
                                 <small class="text-body-secondary">Стоимость: ${book.price} бел.руб </small>
-                                <input type="hidden" name="cost" value="${book.price}" readonly>
+                                <input type="hidden" name="cost" value="${book.price!''}" readonly>
                                 <input type="hidden" name="image" value="/images/${book.previewImageID}">
                             </div>
                         </div>
@@ -70,6 +70,20 @@
     </#list>
 </div>
 
+
+
+   <script>
+    function validateAndFormatCost() {
+        var costInput = document.getElementById('cost');
+        var costValue = costInput.value.replace(/,/g, ''); // Remove commas
+        if (isNaN(costValue)) {
+            alert('Invalid cost value');
+            return false;
+        }
+        costInput.value = parseFloat(costValue).toFixed(2); // Format as a number with two decimal places
+        return true;
+    }
+</script>
 
   <#include "components/footer.ftl">
 

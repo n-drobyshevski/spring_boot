@@ -3,9 +3,6 @@ package com.example.demo.models;
 import lombok.*;
 
 import javax.persistence.*;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
 @Setter
 @Getter
 @Entity
@@ -20,17 +17,24 @@ public class Cart {
         @Column(name="nameproduct")
         private String nameproduct;
         @Column(name="cost")
-        private int cost;
+        private String cost;
         @Column(name="image")
         private String image;
         @Column(name="user_id")
         private int user_id;
 
-    public Cart(Long id, String nameproduct, int cost, String image, int user_id) {
+    public Cart(Long id, String nameproduct, String cost, String image, int user_id) {
         this.id = id;
         this.nameproduct = nameproduct;
         this.cost = cost;
         this.image = image;
         this.user_id = user_id;
+    }
+    public int getCostAsInt() {
+        try {
+            return Integer.parseInt(cost.replace(",", ""));
+        } catch (NumberFormatException e) {
+            return 0; // or handle the error as needed
+        }
     }
 }
