@@ -93,6 +93,25 @@ public class UserService {
         return role;
     }
 
+    public Long getUserId(Principal principal) {
+        if (principal == null) {
+            log.warn("Principal is null, user is not authenticated");
+            return null;
+        }
+
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) {
+            log.warn("User not found with email: {}", email);
+            return null;
+        }
+
+        Long userId = user.getId();
+        log.info("User with email: {} has ID: {}", email, userId);
+        return userId;
+    }
+
     // public void writeToFile(String id){
     // try {
     // FileWriter writer = new FileWriter("file.txt");

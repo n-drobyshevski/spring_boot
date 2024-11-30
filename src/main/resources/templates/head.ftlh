@@ -154,11 +154,16 @@
     <input type="text" placeholder="Search">
   </div>
   <div>
-    <#if role == "ROLE_USER">
-      <a class="nav-link active" aria-current="page" href="/">Профиль</a>
-    </#if>
-    <#if role == "ROLE_ADMIN">
-      <a class="nav-link" href="#">Профиль админа</a>
+    <#if role??>
+      <#if role == "ROLE_USER">
+        <a class="nav-link active" aria-current="page" href="/user/${userId}">Профиль</a>
+      </#if>
+      <#if role == "ROLE_ADMIN">
+        <a class="nav-link" href="/admin">Профиль админа</a>
+      </#if>
+    <#else>
+      <!-- Bootstrap Login Button if no role is detected -->
+      <a class="nav-link" href="/login" >Login</a>
     </#if>
   </div>
 </div>
@@ -207,13 +212,15 @@
 <div class="" style="max-width:1200px;margin:0 auto;padding: 60px 20px;">
   <div class="d-flex flex-wrap w-100">
     <#list books as book>
-      <div class="card mb-4 flex-fill h-100 me-4 bg-blue rounded shadow-sm" style="max-width: 30%;">
-        <img src="" class="card-img-top">
-        <div class="card-body">
-          <h5 class="card-title">${book.title}</h5>
-          <p class="card-text">${book.author}</p>
+      <#if book?index < 20>
+        <div class="card mb-4 flex-fill h-100 me-4 bg-blue rounded shadow-sm" style="max-width: 30%;">
+          <img src="" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">${book.title}</h5>
+            <p class="card-text">${book.author}</p>
+          </div>
         </div>
-      </div>
+      </#if>
     </#list>
   </div>
 </div>
