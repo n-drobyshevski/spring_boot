@@ -1,4 +1,5 @@
 package com.example.demo.controllers;
+
 import com.example.demo.models.Cart;
 import com.example.demo.serveces.CartService;
 import com.example.demo.serveces.UserService;
@@ -29,10 +30,11 @@ public class CartController {
         model.addAttribute("userId", UserService.getUserId(principal));
         return "cart";
     }
+
     @GetMapping("/getAllCart")
-    public List<Cart> getAll(){
+    public List<Cart> getAll() {
         return cartService.getAll();
-    } //выводит всю инфу из бд в корзину
+    } // выводит всю инфу из бд в корзину
 
     @PostMapping("/AddToCart")
     public String addToCart(Cart cart) {
@@ -40,39 +42,44 @@ public class CartController {
         cartService.addToCart(cart);
         return "redirect:/books";
     }
+
     @PostMapping("/AddItemToCart")
     public String AddItemToCart(Cart cart) {
         System.out.println(cart);
         cartService.addToCart(cart);
         return "redirect:/someBooks";
     }
+
     @PostMapping("/cartDelete")
     public String deleteCartT(Cart id) {
         System.out.println(id);
         cartService.deleteCart(id.getId());
         return "redirect:/cart";
     }
+
     @PostMapping("/clearDelete")
     public String clearDelete() {
         System.out.println("Сработало очистка");
         cartService.clearCart(read());
         return "redirect:/cart";
     }
+
     @PostMapping("/buyCart")
     public String buyCart() {
         System.out.println("Купили корзину");
         cartService.buyCart(read());
         return "redirect:/cart";
     }
-    public Long read(){
+
+    public Long read() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("file.txt"));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-                return Long.valueOf(line);
+            try (BufferedReader reader = new BufferedReader(new FileReader("file.txt"))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                    return Long.valueOf(line);
+                }
             }
-            reader.close();
         } catch (IOException e) {
             System.out.println("An error occurred while reading the file.");
             e.printStackTrace();
@@ -81,11 +88,11 @@ public class CartController {
         return 0L;
     }
 
-//    @PostMapping("/cartDeleteOfProduct")
-//    public String deleteCart(Cart id) {
-//        System.out.println(id);
-//        cartService.deleteCart(id.getId());
-//        return "redirect:/";
-//    }
+    // @PostMapping("/cartDeleteOfProduct")
+    // public String deleteCart(Cart id) {
+    // System.out.println(id);
+    // cartService.deleteCart(id.getId());
+    // return "redirect:/";
+    // }
 
 }

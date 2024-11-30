@@ -32,16 +32,16 @@ public class BooksController {
     private final CartService cartService;
 
     @GetMapping("/books")
-    public String product(@RequestParam(name = "title",required = false) String title,Principal principal, Model model) {
-        model.addAttribute("books",booksService.listBooks(title));
+    public String product(@RequestParam(name = "title", required = false) String title, Principal principal,
+            Model model) {
+        model.addAttribute("books", booksService.listBooks(title));
         model.addAttribute("cart", cartService.list());
-        model.addAttribute("user",booksService.getUserByPrincipal(principal));
+        model.addAttribute("user", booksService.getUserByPrincipal(principal));
         model.addAttribute("userId", userService.getUserId(principal));
-        model.addAttribute("flowers", booksService.list());
-        model.addAttribute("role", userService.getUserRole(principal));
         model.addAttribute("role", userService.getUserRole(principal));
         return "books";
     }
+
     @GetMapping("/getBooks")
     public String searchBooksByTitle(@RequestParam(value = "title", required = false) String searchQuery, Model model) {
         List<Books> searchResults;
@@ -55,69 +55,41 @@ public class BooksController {
         model.addAttribute("books", searchResults);
         return "books";
 
-
-
-
-
-
-
-
-
     }
-//    @GetMapping("/books/{ID}")
-//    public String productInfo(@PathVariable Long ID,Model model){
-//        Books books=booksService.getBooksByID(ID);
-//        model.addAttribute("books",books);
-//        model.addAttribute("image",books.getImages());
-//        return"admin";
-//    }
+
+    // @GetMapping("/books/{ID}")
+    // public String productInfo(@PathVariable Long ID,Model model){
+    // Books books=booksService.getBooksByID(ID);
+    // model.addAttribute("books",books);
+    // model.addAttribute("image",books.getImages());
+    // return"admin";
+    // }
     @PostMapping("/books/create")
     public String createBooks(@RequestParam("file1") MultipartFile file1,
-            Books books, Principal principal)throws IOException {
-        booksService.saveBooks(principal,books,file1);
+            Books books, Principal principal) throws IOException {
+        booksService.saveBooks(principal, books, file1);
         return "redirect:/admin";
     }
+
     @PostMapping("/books/delete/{ID}")
-    public String deleteBooks(@PathVariable Long ID){
+    public String deleteBooks(@PathVariable Long ID) {
         booksService.deleteBooks(ID);
-        return"redirect:/admin";
+        return "redirect:/admin";
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @GetMapping("/books/{ID}")
-    public String getBooksDetails(@PathVariable Long ID, Model model) {
+    public String getBooksDetails(@PathVariable Long ID, Model model, Principal principal) {
         Books book = booksService.getBooksByID(ID);
         if (book == null) {
             throw new RuntimeException("Book not found with ID: " + ID);
         }
         model.addAttribute("book", book);
+        model.addAttribute("userId", userService.getUserId(principal));
+        model.addAttribute("role", userService.getUserRole(principal));
+        model.addAttribute("cart", cartService.list());
+        model.addAttribute("user", booksService.getUserByPrincipal(principal));
         return "book-details"; // Имя HTML-шаблона
     }
-
-
-
-
-
-
 
     @GetMapping("/getBooksByGenre")
     public String getBooks(@RequestParam(required = false) String genre, Model model) {

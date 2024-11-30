@@ -1,11 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="ru">
+
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/login.css">
-    <title>Название парикмахерской</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <title>Dead Poets Society</title>
+ <link rel="stylesheet" href="/static/css/login.css"> 
+ <link rel="stylesheet" href="/css/base.css">
+
 </head>
-<body>
+
+<body >
+  <header>
+    <#include "components/navbar.ftl">
+  </header>
 <h1>Регистрация</h1>
 <div class="regist">
     <form action="/registration" method="post">

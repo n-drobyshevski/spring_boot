@@ -1,7 +1,7 @@
 <navbar class="navbar d-flex navbar-expand-md shadow-sm bg-white px-2 align-items-center justify-content-between" style="height: fit-content;">
   <div style="display: flex; align-items: center;">
     <a href="/" class="navbar-brand" style="background-color: transparent; margin-right: 0px;">
-      <img src="im/99.jpg" alt="Логотип" class="navbar-logo" style=" width: 80px; height: 70px; margin-right: 0px;"> <!-- Логотип слева -->
+      <img src="/static/im/99.jpg" alt="Логотип" class="navbar-logo" style=" width: 80px; height: 70px; margin-right: 0px;"> <!-- Логотип слева -->
     </a>
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -25,6 +25,7 @@
     <ul class="navbar-nav">
       <#if role??>
         <li class="nav-item dropdown">
+        
           <#if role=="ROLE_USER">
             <a class="nav-link dropdown-toggle" href="/user/${userId}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Профиль

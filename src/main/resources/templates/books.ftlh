@@ -27,16 +27,26 @@
     <button class="filter-btn">романы</button>
     <button class="filter-btn">ужасы</button>
 </div>
-
-
-<div class="d-flex flex-wrap w-100">
+<div class="container w-100 d-flex justify-content-end" >
+<form class="mb-5" action="/getBooksByGenre"" method="get">
+    <label for="genre">Фильтр по жанру:</label>
+    <select name="genre" id="genre" onchange="this.form.submit()">
+        <option value="">Все жанры</option>
+        <option value="роман">Роман</option>
+        <option value="детектив">Детектив</option>
+        <option value="Ужасы">Ужасы</option>
+        <option value="Biography">Biography</option>
+    </select>
+</form>
+</div>
+<div class="d-flex flex-wrap w-100" style="padding: 0 96px" >
     <#list books as book>
-        <form action="/AddToCart" method="post">
-            <div class="d-flex flex-wrap w-100">
-                    <div class="card mb-4 flex-fill h-100 me-4 bg-blue rounded shadow-sm" style="max-width: 50%;">
+        <form class="flex-fill" action="/AddToCart" method="post" style="min-width:100px;max-width:25%">
+        <div class="d-flex flex-wrap">
+                    <div class="card mb-4 mw-20 flex-fill h-100 me-4 bg-blue rounded shadow-sm" style="">
                         <!-- Обёртываем изображение книги ссылкой -->
                         <a href="/books/${book.id}">
-                            <img src="/images/${book.previewImageID}" alt="${book.title}">
+                            <img class="card-img-top" src="/images/${book.previewImageID}" alt="${book.title}">
                         </a>
                         <div class="card-body">
                             <!-- Обёртываем название книги ссылкой -->
@@ -60,16 +70,7 @@
     </#list>
 </div>
 
-<form action="/getBooksByGenre"" method="get">
-    <label for="genre">Фильтр по жанру:</label>
-    <select name="genre" id="genre" onchange="this.form.submit()">
-        <option value="">Все жанры</option>
-        <option value="роман">Роман</option>
-        <option value="детектив">Детектив</option>
-        <option value="Ужасы">Ужасы</option>
-        <option value="Biography">Biography</option>
-    </select>
-</form>
+
   <#include "components/footer.ftl">
 
 </body>
