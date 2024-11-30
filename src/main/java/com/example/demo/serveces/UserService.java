@@ -1,5 +1,6 @@
 package com.example.demo.serveces;
 
+
 import com.example.demo.models.User;
 import com.example.demo.models.enums.Role;
 import com.example.demo.repositories.UserRepository;
@@ -37,11 +38,9 @@ public class UserService {
         userRepository.save(user);
         return true;
     }
-
     public List<User> list() {
         return userRepository.findAll();
     }
-
     public void banUser(Long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
@@ -55,7 +54,6 @@ public class UserService {
         }
         userRepository.save(user);
     }
-
     public void changeUserRoles(User user, Map<String, String> form) {
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)

@@ -1,6 +1,5 @@
 package com.example.demo.models;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,14 +7,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name="images")
+@Table(name = "images")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-   @Column(name = "ID")
+    @Column(name = "ID")
     private Long ID;
     @Column(name = "name")
     private String name;
@@ -28,14 +27,19 @@ public class Image {
     @Column(name = "isPreviewImage")
     private boolean isPreviewImage;
     @Lob
-    @Column(name="bytes",columnDefinition = "blob")
+    @Column(name = "bytes", columnDefinition = "blob")
     private byte[] bytes;
 
-    @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Tovar tovar;
-     @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
-      private Books books;
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private Books books;
 
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private Flowers flowers;
 
+    public void setFlowers(Flowers flowers) {
+        this.flowers = flowers;
+    }
 
 }

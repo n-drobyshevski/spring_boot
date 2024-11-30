@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TovarRepository extends JpaRepository<Tovar,Long > {
-    List<Tovar> findByTitle(String title);    
+    List<Tovar> findByTitle(String title);
     List<Tovar> findByTitleContainingIgnoreCase(String title);
 }
