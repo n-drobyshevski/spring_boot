@@ -32,6 +32,7 @@
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="/user/${userId}">Профиль</a></li>
+              <li><a class="dropdown-item" href="/orders/my">Мои заказы</a></li>
               <li><a class="dropdown-item" href="/logout">Выйти</a></li>
             </ul>
           </#if>
@@ -41,6 +42,7 @@
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="/admin">Профиль</a></li>
+              <li><a class="dropdown-item" href="/orders/my">Мои заказы</a></li>
               <li><a class="dropdown-item" href="/logout">Выйти</a></li>
             </ul>
           </#if>

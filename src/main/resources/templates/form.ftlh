@@ -1,10 +1,20 @@
+<!DOCTYPE html>
 <html>
+
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/login.css">
-    <title>Заполнение формы</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <title>Dead Poets Society</title>
+  <link rel="stylesheet" href="/css/base.css">
 </head>
+
 <body>
+  <!-- Include Navbar -->
+  <header>
+    <#include "components/navbar.ftl">
+  </header>
+  <main  class="d-grid gap-5 mt-5 py-5 mx-auto" style="width: 900px;">
 <h1>Оформление получателя заказа</h1>
 <div class="regist">
 
@@ -25,12 +35,12 @@
             <label for="adress">Адрес</label>
             <input type="text" class="form-control" id="adress" required name="adress">
         </div>
-        <div>
+        <div class="my-4">
             <input type="hidden" name="_csrf" value="${_csrf.token}">
             <button type="submit" name="name" style="width: 100%" class="btn btn-dark">Оформить получателя</button>
 
         </div>
-        <input type="hidden" name="_csrf" value="${_csrf.token}">
+        <input  type="hidden" name="_csrf" value="${_csrf.token}">
         <a class="nav-link active" aria-current="page" href="/information">Информация о получении товара</a>
     </form>
 
@@ -41,5 +51,8 @@
         </#if>
     </div>
 </div>
+</main>
+  <#include "components/footer.ftl">
 </body>
+
 </html>

@@ -78,10 +78,12 @@ public class OrderController {
 
 
     @GetMapping("/my")
-    public String viewMyOrders(Model model, User user) {
+    public String viewMyOrders(Model model, User user, Principal principal) {
         String email = user.getEmail();
         List<Order> orders = orderService.getOrdersByEmail(email);
         model.addAttribute("orders", orders);
+        model.addAttribute("role", userService.getUserRole(principal));
+        model.addAttribute("userId", userService.getUserId(principal));
         return "my-orders"; // шаблон FTLH для отображения заказов пользователя
     }
 

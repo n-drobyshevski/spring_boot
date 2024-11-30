@@ -90,6 +90,29 @@
             <button type="submit" class="btn btn-success">Добавить товар</button>
         </form>
     </div>
+     <div>
+        <h1 class="mb-3">История покупок</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Название товара</th>
+                    <th>id товара</th>
+                    <th>Цена</th>
+                    <th>Пользователь ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                <#list histories as history>
+                    <tr>
+                        <td>${history.nameproduct! "Название отсутствует"}</td>
+                        <td>${history.id! "id отсутствует"}</td>
+                        <td>${history.cost! "Цена отсутствует"}</td>
+                        <td>${history.user_id! "Пользователь ID отсутствует"}</td>
+                    </tr>
+                </#list>
+            </tbody>
+        </table>
+    </div>
     <div >
         <h1 class=" mb-3">Список книг</h1>
         <table class="table table-bordered">

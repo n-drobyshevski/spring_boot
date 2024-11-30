@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Оформление заказа</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <title>Dead Poets Society</title>
+  <link rel="stylesheet" href="/css/head.css">
 </head>
+
 <body>
+  <!-- Include Navbar -->
+  <header>
+    <#include "components/navbar.ftl">
+  </header>
 <h1>Оформление заказа</h1>
 <form action="/orders/create" method="post">
     <label for="customerName">ФИО:</label>
@@ -22,5 +31,7 @@
     <button type="submit">Подтвердить заказ</button>
     <a class="navbar-brand" href="/orders/my">loh</a>
 </form>
+  <#include "components/footer.ftl">
 </body>
+
 </html>

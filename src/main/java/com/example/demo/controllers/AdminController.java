@@ -1,8 +1,10 @@
 package com.example.demo.controllers;
 
+import com.example.demo.models.History;
 import com.example.demo.models.User;
 import com.example.demo.models.enums.Role;
 import com.example.demo.repositories.ImageRepository;
+import com.example.demo.serveces.HistoryService;
 import com.example.demo.serveces.BooksService;
 import com.example.demo.serveces.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,20 +17,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
+import java.util.List;
 
 import java.io.IOException;
 import java.security.Principal;
+
 @Controller
 @RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AdminController {
     private final UserService userService;
-    private final BooksService booksService;
+    private final HistoryService historyService;
     private final ImageRepository imageRepository;
-
+    private final BooksService booksService;
 
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
+        List<History> histories = historyService.getAllHistories();
+        model.addAttribute("histories", histories);
         model.addAttribute("users", userService.list());
         model.addAttribute("books", booksService.list());
         model.addAttribute("images", imageRepository.findAll());
@@ -36,7 +42,6 @@ public class AdminController {
         model.addAttribute("userId", userService.getUserId(principal));
         return "admin";
     }
-
 
     @PostMapping("/admin/user/ban/{id}")
     public String userBan(@PathVariable("id") Long id) {
@@ -56,6 +61,5 @@ public class AdminController {
         userService.changeUserRoles(user, form);
         return "redirect:/admin";
     }
-
 
 }
