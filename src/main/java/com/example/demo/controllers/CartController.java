@@ -20,14 +20,14 @@ import java.security.Principal;
 public class CartController {
 
     private final CartService cartService;
-    private final UserService UserService;
+    private final UserService userService;
 
     @GetMapping("/cart")
     public String get(Model model, Principal principal) {
         List<Cart> carts = cartService.getAll();
         model.addAttribute("carts", carts);
-        model.addAttribute("role", UserService.getUserRole(principal));
-        model.addAttribute("userId", UserService.getUserId(principal));
+        model.addAttribute("role", userService.getUserRole(principal));
+        model.addAttribute("userId", userService.getUserId(principal));
         return "cart";
     }
 
@@ -58,17 +58,28 @@ public class CartController {
     }
 
     @PostMapping("/clearDelete")
-    public String clearDelete() {
+    public String clearDelete(Principal principal) {
         System.out.println("Сработало очистка");
-        cartService.clearCart(read());
+        cartService.clearCart(userService.getUserId(principal));
         return "redirect:/cart";
     }
 
     @PostMapping("/buyCart")
     public String buyCart() {
         System.out.println("Купили корзину");
-        cartService.buyCart(read());
-        return "redirect:/cart";
+        boolean success = cartService.buyCart();
+        if (success) {
+            return "redirect:/success";
+        } else {
+            return "redirect:/cart";
+        }
+    }
+    
+    @GetMapping("/success")
+    public String success(Model model, Principal principal) {
+        model.addAttribute("role", userService.getUserRole(principal));
+        model.addAttribute("userId", userService.getUserId(principal));
+        return "purchase_success";
     }
 
     public Long read() {
