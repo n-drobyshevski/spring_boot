@@ -1,10 +1,12 @@
 package com.example.demo.controllers;
 
-import com.example.demo.models.History;
+import com.example.demo.models.Books;
 import com.example.demo.models.Tovar;
+import com.example.demo.serveces.BooksService;
 import com.example.demo.serveces.CartService;
 import com.example.demo.serveces.HistoryService;
 import com.example.demo.serveces.ProductServicts;
+import com.example.demo.serveces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 import java.io.IOException;
 import java.security.Principal;
 
@@ -21,19 +25,22 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class MainController {
     private final ProductServicts productServicts;
+    private final BooksService booksService;
+    private final UserService UserService;
     public final CartService cartService;
     public final HistoryService historyService;
 
     @GetMapping("/")
     public String product(@RequestParam(name = "title", required = false) String title, Principal principal,
             Model model) {
-        model.addAttribute("products", productServicts.listTovar(title));
+        List<Books> books = booksService.listBooks(title);
+        model.addAttribute("books", books);
         model.addAttribute("cart", cartService.list());
         model.addAttribute("user", productServicts.getUserByPrincipal(principal));
-        model.addAttribute("user", productServicts.getUserByPrincipal(principal));
+        model.addAttribute("userId", UserService.getUserId(principal));
         model.addAttribute("historys", historyService.getAll());
-
-        return "product";
+        model.addAttribute("role", UserService.getUserRole(principal));
+        return "head";
     }
 
     @GetMapping("/product/{ID}")

@@ -1,8 +1,6 @@
 package com.example.demo.controllers;
 import com.example.demo.models.Cart;
-import com.example.demo.models.Tovar;
 import com.example.demo.serveces.CartService;
-import com.example.demo.serveces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,13 +32,13 @@ public class CartController {
     public String addToCart(Cart cart) {
         System.out.println(cart);
         cartService.addToCart(cart);
-        return "redirect:/flowers";
+        return "redirect:/books";
     }
     @PostMapping("/AddItemToCart")
     public String AddItemToCart(Cart cart) {
         System.out.println(cart);
         cartService.addToCart(cart);
-        return "redirect:/someFlowers";
+        return "redirect:/someBooks";
     }
     @PostMapping("/cartDelete")
     public String deleteCartT(Cart id) {

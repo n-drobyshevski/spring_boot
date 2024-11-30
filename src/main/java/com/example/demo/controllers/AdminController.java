@@ -19,7 +19,7 @@ import java.util.Map;
 @Controller
 @RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-public class AdminController2 {
+public class AdminController {
     private final UserService userService;
     private final BooksService booksService;
     private final ImageRepository imageRepository;
