@@ -40,8 +40,9 @@ public class MainController {
         model.addAttribute("userId", UserService.getUserId(principal));
         model.addAttribute("historys", historyService.getAll());
         model.addAttribute("role", UserService.getUserRole(principal));
-        return "head";
+        return "head"; 
     }
+    
 
     @GetMapping("/product/{ID}")
     public String productInfo(@PathVariable Long ID, Model model) {

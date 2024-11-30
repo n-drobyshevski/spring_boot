@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
+import java.io.IOException;
+import java.security.Principal;
 @Controller
 @RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -26,10 +28,12 @@ public class AdminController {
 
 
     @GetMapping("/admin")
-    public String admin(Model model) {
+    public String admin(Model model, Principal principal) {
         model.addAttribute("users", userService.list());
         model.addAttribute("books", booksService.list());
         model.addAttribute("images", imageRepository.findAll());
+        model.addAttribute("role", userService.getUserRole(principal));
+        model.addAttribute("userId", userService.getUserId(principal));
         return "admin";
     }
 

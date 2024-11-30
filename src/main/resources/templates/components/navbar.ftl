@@ -1,6 +1,6 @@
 <navbar class="navbar d-flex navbar-expand-md shadow-sm bg-white px-2 align-items-center justify-content-between" style="height: fit-content;">
   <div style="display: flex; align-items: center;">
-    <a href="/head" class="navbar-brand" style="background-color: transparent; margin-right: 0px;">
+    <a href="/" class="navbar-brand" style="background-color: transparent; margin-right: 0px;">
       <img src="im/99.jpg" alt="Логотип" class="navbar-logo" style=" width: 80px; height: 70px; margin-right: 0px;"> <!-- Логотип слева -->
     </a>
     <ul class="navbar-nav">
@@ -10,12 +10,15 @@
       <li class="nav-item">
         <a class="nav-link" href="/podborki">Подборки</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/cart">Корзина</a>
-      </li>
+      
+      <#if role??> <!-- нет логина нет и корзины -->
+        <li class="nav-item">
+          <a class="nav-link" href="/cart">Корзина</a>
+        </li>
+      </#if>
     </ul>
   </div>
-  <form class="d-flex mt-3 w-50" role="search">
+  <form class="d-flex w-50" role="search">
     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
   </form>
   <#-- В зависимости от аттрибута role рендерится один из дропдаунов -->
