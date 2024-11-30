@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 import com.example.demo.models.Cart;
 import com.example.demo.serveces.CartService;
+import com.example.demo.serveces.UserService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,17 +12,21 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
 public class CartController {
 
     private final CartService cartService;
+    private final UserService UserService;
 
     @GetMapping("/cart")
-    public String get(Model model) {
+    public String get(Model model, Principal principal) {
         List<Cart> carts = cartService.getAll();
         model.addAttribute("carts", carts);
+        model.addAttribute("role", UserService.getUserRole(principal));
+        model.addAttribute("userId", UserService.getUserId(principal));
         return "cart";
     }
     @GetMapping("/getAllCart")

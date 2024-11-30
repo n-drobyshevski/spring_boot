@@ -4,6 +4,8 @@ import com.example.demo.models.Books;
 import com.example.demo.models.Tovar;
 import com.example.demo.repositories.ImageRepository;
 import com.example.demo.serveces.BooksService;
+import com.example.demo.serveces.CartService;
+import com.example.demo.serveces.UserService;
 import com.example.demo.serveces.BooksService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,15 +26,20 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class BooksController {
-    private final BooksService booksService;
     private final ImageRepository imageRepository;
+    private final UserService userService;
+    private final BooksService booksService;
+    private final CartService cartService;
 
     @GetMapping("/books")
     public String product(@RequestParam(name = "title",required = false) String title,Principal principal, Model model) {
         model.addAttribute("books",booksService.listBooks(title));
+        model.addAttribute("cart", cartService.list());
         model.addAttribute("user",booksService.getUserByPrincipal(principal));
+        model.addAttribute("userId", userService.getUserId(principal));
         model.addAttribute("flowers", booksService.list());
-        model.addAttribute("images", imageRepository.findAll());
+        model.addAttribute("role", userService.getUserRole(principal));
+        model.addAttribute("role", userService.getUserRole(principal));
         return "books";
     }
     @GetMapping("/getBooks")

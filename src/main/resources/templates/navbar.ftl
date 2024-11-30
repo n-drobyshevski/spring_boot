@@ -1,26 +1,50 @@
-<div class="navbar">
+<navbar class="navbar d-flex navbar-expand-md shadow-sm bg-white px-2 align-items-center justify-content-between" style="height: fit-content;">
   <div style="display: flex; align-items: center;">
-    <a href="/head" style="background-color: transparent; margin-right: 0px;">
-      <img src="im/99.jpg" alt="Логотип" class="navbar-logo"> <!-- Логотип слева -->
+    <a href="/head" class="navbar-brand" style="background-color: transparent; margin-right: 0px;">
+      <img src="im/99.jpg" alt="Логотип" class="navbar-logo" style=" width: 80px; height: 70px; margin-right: 0px;"> <!-- Логотип слева -->
     </a>
-    <a href="/books">Книги</a>
-    <a href="/podborki">Подборки</a>
-    <a href="/cart">Корзина</a>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/books">Книги</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/podborki">Подборки</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cart">Корзина</a>
+      </li>
+    </ul>
   </div>
-  <div>
-    <input type="text" placeholder="Search">
-  </div>
-  <div>
-    <#if role??>
-      <#if role == "ROLE_USER">
-        <a class="nav-link active" aria-current="page" href="/user/${userId}">Профиль</a>
+  <form class="d-flex mt-3 w-50" role="search">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+  </form>
+  <#-- В зависимости от аттрибута role рендерится один из дропдаунов -->
+    <ul class="navbar-nav">
+      <#if role??>
+        <li class="nav-item dropdown">
+          <#if role=="ROLE_USER">
+            <a class="nav-link dropdown-toggle" href="/user/${userId}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Профиль
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/user/${userId}">Профиль</a></li>
+              <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+            </ul>
+          </#if>
+          <#if role=="ROLE_ADMIN">
+            <a class="nav-link dropdown-toggle" href="/admin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Профиль админа
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/admin">Профиль</a></li>
+              <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+            </ul>
+          </#if>
+          <#else>
+            <!-- Bootstrap Login Button if no role is detected -->
+        <li class="nav-item me-4">
+          <a class="nav-link" href="/login">Login</a>
       </#if>
-      <#if role == "ROLE_ADMIN">
-        <a class="nav-link" href="/admin">Профиль админа</a>
-      </#if>
-    <#else>
-      <!-- Bootstrap Login Button if no role is detected -->
-      <a class="nav-link" href="/login" >Login</a>
-    </#if>
-  </div>
-</div>
+      </li>
+    </ul>
+</navbar>

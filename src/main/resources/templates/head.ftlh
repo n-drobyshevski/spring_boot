@@ -12,43 +12,8 @@
         background-color: #f7f4f0;
         color: #333;
     }
-
-    /* Верхнее меню */
-    .navbar {
-        display: flex;
-        height: fit-content;
-        justify-content: space-between;
-        padding: 0 8px;
-        align-items: center;
-        background-color: #ffffff;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    .navbar-logo {
-        width: 80px; /* Размер логотипа */
-        height: 70px; /* Размер логотипа */
-        margin-right: 0px; /* Отступ от логотипа */
-    }
-    .navbar a {
-        text-decoration: none;
-        color: black;
-        font-size: 16px;
-        margin-right: 20px;
-        padding: 10px 15px; /* Отступы для кнопок */
-        border: 1px solid transparent; /* Граница для кнопок */
-        border-radius: 20px; /* Скругление углов */
-        transition: background-color 0.3s, color 0.3s; /* Эффекты перехода */
-    }
-
-    .navbar a:hover {
-        background-color: #B5A495; /* Цвет фона при наведении */
-        color: white; /* Цвет текста при наведении */
-    }
-    .navbar input[type="text"] {
-        padding: 5px;
-        font-size: 16px;
-        width: 400px;
-    }
-
+    
+    
     /* Секция с цитатой и заголовком */
     .hero {
         position: relative;

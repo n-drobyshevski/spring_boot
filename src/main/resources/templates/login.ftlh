@@ -6,6 +6,22 @@
     <title> FLOWERS </title>
 </head>
 <h1>Авторизация</h1>
+
+<!-- Сообщения об ошибке или об успешном логауте-->
+    <div class="container d-flex justify-content-center pt-4">
+    <#if message??>
+        <p>
+            ${message}
+        </p>
+    </#if>
+    <#if errorMessage??>
+            <p>
+                ${errorMessage}
+            </p>
+    </#if>
+    </div>
+
+
 <div class="regist">
     <div class="regist">
     <form action="/login " method="post">

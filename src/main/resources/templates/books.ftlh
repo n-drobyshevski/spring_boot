@@ -1,7 +1,8 @@
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dead Poets Society</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <title>Dead Poets Society</title>
     <style>
         /* Основной стиль страницы */
         body {
@@ -12,41 +13,7 @@
             color: #333;
         }
 
-        /* Верхнее меню */
-        .navbar {
-            display: flex;
-            height: 60px;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2px;
-            background-color: #ffffff;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .navbar-logo {
-            width: 80px; /* Размер логотипа */
-            height: 70px; /* Размер логотипа */
-            margin-right: 0px; /* Отступ от логотипа */
-        }
-        .navbar a {
-            text-decoration: none;
-            color: black;
-            font-size: 16px;
-            margin-right: 20px;
-            padding: 10px 15px; /* Отступы для кнопок */
-            border: 1px solid transparent; /* Граница для кнопок */
-            border-radius: 20px; /* Скругление углов */
-            transition: background-color 0.3s, color 0.3s; /* Эффекты перехода */
-        }
-
-        .navbar a:hover {
-            background-color: #B5A495; /* Цвет фона при наведении */
-            color: white; /* Цвет текста при наведении */
-        }
-        .navbar input[type="text"] {
-            padding: 5px;
-            font-size: 16px;
-            width: 400px;
-        }
+        
 
                 /* Кнопки фильтров */
                 .filters {
@@ -135,26 +102,9 @@
 </head>
 <body>
 
-<!-- Верхнее меню -->
-<div class="navbar">
-  <div style="display: flex; align-items: center;">
-    <a href="loh3.html" style="background-color: transparent; margin-right: 0px;">
-      <img src="im/99.jpg" alt="Логотип" class="navbar-logo"> <!-- Логотип слева -->
-    </a>
-    <a href="/books">Книги</a>
-    <a href="/podborki">Подборки</a>
-    <a href="/cart">Корзина</a>
-  </div>
-  <form action="/getBooks" method="get" >
-                  Поиск по названию объявления: <input type="text" placeholder="Search" name="title" id="title"><br>
-                  <input type="submit" value="Поиск"/>
 
-              </form>
-  <div>
-    <a class="nav-link active" aria-current="page" href="/">Профиль </a>
-    <a href="#">Профиль админа</a>
-  </div>
-</div>
+<!-- Верхнее меню -->
+<#include "navbar.ftl"> <!-- подключить Navbar -->
 
 <!-- Фильтры -->
 <div class="filters">
