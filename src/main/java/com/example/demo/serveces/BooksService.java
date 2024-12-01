@@ -1,10 +1,12 @@
 package com.example.demo.serveces;
 
 import com.example.demo.models.Books;
+import com.example.demo.models.Compilation;
 import com.example.demo.models.Image;
 import com.example.demo.models.Tovar;
 import com.example.demo.models.User;
 import com.example.demo.repositories.BooksRepository;
+import com.example.demo.repositories.ImageRepository;
 import com.example.demo.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,7 @@ public class BooksService {
 
     public final BooksRepository booksRepository;
     private final UserRepository userRepository;
+    private final ImageRepository imageRepository;
 
     public List<Books> listBooks(String title) {
         List<Books> books;
@@ -50,10 +53,17 @@ public class BooksService {
             books.addImageToBooks(image1);
         }
 
-        log.info("Saving new Product.Title:{}", books.getTitle(), books.getUser().getEmail());
+        // Ensure all required fields are set
+        if (books.getTitle() == null || books.getAuthor() == null || books.getPrice() == 0) {
+            throw new IllegalArgumentException("Title, Author, and Price are required fields.");
+        }
+
+        log.info("Saving new Product. Title: {}, User: {}", books.getTitle(), books.getUser().getEmail());
         Books booksFromDb = booksRepository.save(books);
-        booksFromDb.setPreviewImageID(booksFromDb.getImages().get(0).getId());
-        booksRepository.save(books);
+        if (!booksFromDb.getImages().isEmpty()) {
+            booksFromDb.setPreviewImageID(booksFromDb.getImages().get(0).getId());
+        }
+        booksRepository.save(booksFromDb);
     }
 
     public User getUserByPrincipal(Principal principal) {
@@ -75,6 +85,36 @@ public class BooksService {
         return image;
     }
 
+    public void editBooks(Long id, Books updatedBooks, MultipartFile file1, Principal principal) throws IOException {
+        Books existingBook = booksRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
+        existingBook.setTitle(updatedBooks.getTitle());
+        existingBook.setAuthor(updatedBooks.getAuthor());
+        existingBook.setGenre(updatedBooks.getGenre());
+        existingBook.setDescription(updatedBooks.getDescription());
+        existingBook.setPrice(updatedBooks.getPrice());
+
+        if (file1 != null && !file1.isEmpty() && file1.getSize() != 0) {
+             // Delete existing images
+            List<Image> existingImages = existingBook.getImages();
+            for (Image image : existingImages) {
+                imageRepository.delete(image);
+            }
+            existingBook.getImages().clear();
+            // Add new image
+            Image newImage = new Image();
+            newImage.setName(file1.getOriginalFilename());
+            newImage.setOriginalFileName(file1.getOriginalFilename());
+            newImage.setSize(file1.getSize());
+            newImage.setContentType(file1.getContentType());
+            newImage.setBytes(file1.getBytes());
+            newImage.setBook(existingBook);
+            imageRepository.save(newImage);
+            existingBook.setPreviewImageID(newImage.getId());
+        }
+
+        saveBooks(principal, existingBook, file1);
+    }
+
     public void deleteBooks(Long ID) {
         booksRepository.deleteById(ID);
     }
@@ -82,17 +122,17 @@ public class BooksService {
     public Books getBooksByID(Long ID) {
         return booksRepository.findById(ID).orElse(null);
     }
-    
+
     public List<Books> findAllById(List<Long> bookIds) {
 
         return booksRepository.findAllById(bookIds);
 
     }
+
     public List<Books> getAllBooks() {
         // Получите все цветки из репозитория или другого источника данных
         return booksRepository.findAll();
     }
-    
 
     public void writeToFile(String ID) {
         try {

@@ -53,7 +53,7 @@ public class Books {
     //    dateOfCreated=LocalDateTime.now();
     //}
     public void addImageToBooks(Image image) {
-        image.setBooks(this);
+        image.setBook(this);
         images.add(image);
     }
 

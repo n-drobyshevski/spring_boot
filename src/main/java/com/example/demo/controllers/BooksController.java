@@ -102,4 +102,25 @@ public class BooksController {
         model.addAttribute("books", books);
         return "books"; // Имя вашего шаблона списка книг
     }
+    
+    @GetMapping("/books/edit/{ID}")
+    public String editBookForm(@PathVariable Long ID, Model model, Principal principal) {
+        Books book = booksService.getBooksByID(ID);
+        if (book == null) {
+            throw new RuntimeException("Book not found with ID: " + ID);
+        }
+        model.addAttribute("book", book);
+        model.addAttribute("userId", userService.getUserId(principal));
+        model.addAttribute("role", userService.getUserRole(principal));
+        return "book-edit"; // Имя HTML-шаблона для редактирования книги
+    }
+
+    @PostMapping("/books/edit/{ID}")
+    public String editBook(@PathVariable Long ID,
+            @RequestParam("file1") MultipartFile file1,
+            Books books, Principal principal) throws IOException {
+        booksService.editBooks(ID, books, file1, principal);
+        return "redirect:/books/" + ID;
+    }
+
 }
