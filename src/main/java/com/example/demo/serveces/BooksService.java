@@ -82,11 +82,17 @@ public class BooksService {
     public Books getBooksByID(Long ID) {
         return booksRepository.findById(ID).orElse(null);
     }
+    
+    public List<Books> findAllById(List<Long> bookIds) {
 
+        return booksRepository.findAllById(bookIds);
+
+    }
     public List<Books> getAllBooks() {
         // Получите все цветки из репозитория или другого источника данных
         return booksRepository.findAll();
     }
+    
 
     public void writeToFile(String ID) {
         try {

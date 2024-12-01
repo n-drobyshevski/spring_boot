@@ -38,10 +38,10 @@
           </#if>
           <#if role=="ROLE_ADMIN">
             <a class="nav-link dropdown-toggle" href="/admin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Профиль админа
+              Панель админа
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/admin">Профиль</a></li>
+              <li><a class="dropdown-item" href="/admin">Панель админа</a></li>
               <li><a class="dropdown-item" href="/orders/my">Мои заказы</a></li>
               <li><a class="dropdown-item" href="/logout">Выйти</a></li>
             </ul>

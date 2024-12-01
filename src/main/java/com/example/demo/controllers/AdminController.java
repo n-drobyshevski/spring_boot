@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.models.Compilation;
 import com.example.demo.models.History;
 import com.example.demo.models.User;
 import com.example.demo.models.enums.Role;
@@ -7,6 +8,7 @@ import com.example.demo.repositories.ImageRepository;
 import com.example.demo.serveces.HistoryService;
 import com.example.demo.serveces.BooksService;
 import com.example.demo.serveces.UserService;
+import com.example.demo.serveces.CompilationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,7 @@ public class AdminController {
     private final HistoryService historyService;
     private final ImageRepository imageRepository;
     private final BooksService booksService;
+    private final CompilationService compilationService;
 
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
@@ -62,4 +65,13 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    @PostMapping("/admin/createCompilation")
+    public String createCompilation(@RequestParam("name") String name, @RequestParam("description") String description,
+            Model model) {
+        Compilation compilation = new Compilation();
+        compilation.setName(name);
+        compilation.setDescription(description);
+        compilationService.saveCompilation(compilation);
+        return "redirect:/admin";
+    }
 }
