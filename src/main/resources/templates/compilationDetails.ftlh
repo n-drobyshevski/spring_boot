@@ -40,10 +40,26 @@
                 </#if>
                 <h4>${compilation.name}</h4>
                 <p>${compilation.description}</p>
-                
-                <ul>
-                    
-                </ul>
+                <div class="container mt-5">
+                    <h5>Книги в подборке:</h5>
+                    <div class="row">
+                        <#list books as book>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100 shadow-sm">
+                                    <a href="/books/${book.id}">
+                                        <img src="/images/${book.previewImageID}" class="card-img-top" alt="${book.title}" style="height: 150px; object-fit: cover;">
+                                    </a>
+                                    <div class="card-body p-2">
+                                        <h6 class="card-title mb-1">
+                                            <a href="/books/${book.id}" class="text-decoration-none text-dark">${book.title}</a>
+                                        </h6>
+                                        <p class="card-text mb-1">${book.author}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </#list>
+                    </div>
+                </div>
             </div>
         </section>
     </main>

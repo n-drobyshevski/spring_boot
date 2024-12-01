@@ -7,6 +7,7 @@ import com.example.demo.models.User;
 import com.example.demo.repositories.CompilationRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.repositories.ImageRepository;
+import com.example.demo.repositories.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,8 +26,8 @@ import java.io.*;
 @RequiredArgsConstructor
 public class CompilationService {
     private final CompilationRepository compilationRepository;
-    private final UserRepository userRepository;
     private final ImageRepository imageRepository;
+    private final BooksRepository booksRepository;
 
     public List<Compilation> getAllCompilations() {
         return compilationRepository.findAll();
@@ -36,13 +37,17 @@ public class CompilationService {
         return compilationRepository.findById(ID).orElse(null);
     }
 
-    public void saveCompilation(Principal principal, Compilation compilation, MultipartFile file1) throws IOException {
+    public void saveCompilation(Principal principal, Compilation compilation, MultipartFile file1, List<Long> bookIds)
+            throws IOException {
         Image image1;
         if (file1.getSize() != 0) {
             image1 = toImageEntity(file1);
             image1.setPreviewImage(true);
             compilation.addImageToCompilation(image1);
         }
+
+        List<Books> books = booksRepository.findAllById(bookIds);
+        compilation.setBooks(books);
 
         Compilation compilationFromDB = compilationRepository.save(compilation);
         compilationFromDB.setPreviewImageID(new ArrayList<>(compilationFromDB.getImages()).get(0).getId());
@@ -69,7 +74,7 @@ public class CompilationService {
             imageRepository.save(newImage);
             existingCompilation.setPreviewImageID(newImage.getId());
         }
-        saveCompilation(principal, existingCompilation, file1);
+        saveCompilation(principal, existingCompilation, file1, new ArrayList<>());
     }
 
     private Image toImageEntity(MultipartFile file) throws IOException {

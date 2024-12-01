@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import java.util.Set;
+import java.util.List;
 import com.example.demo.models.Books;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.HashSet;
@@ -32,8 +33,7 @@ public class Compilation {
         joinColumns = @JoinColumn(name = "compilation_id"),
         inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    
-    private Set<Books> books = new HashSet<>();
+    private List<Books> books;
     private Long previewImageID;
     
     public Long getPreviewImageID() {

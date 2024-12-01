@@ -32,7 +32,7 @@
                 </#list>
             </div>
             <#if role=="ROLE_ADMIN">
-                <a href="/admin" class="btn btn-success mt-4">Добавить Подборку</a>
+                <a href="/admin/compilations" class="btn btn-success mt-4">Добавить Подборку</a>
             </#if>
         </section>
     </main>

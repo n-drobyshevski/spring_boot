@@ -11,16 +11,11 @@
     <header>
         <#include "components/navbar.ftl">
     </header>
-    <main class="container py-5">
-         <div class="mb-4">
-            <a href="/admin" class="btn btn-outline-secondary">Назад к панели управления</a>
-        </div>
+     <main class="container py-5">
         <h1 class="mb-4">Управление подборками</h1>
         <div>
-            <div class="card">
-              <div class="card-body">
             <h2 class="mb-3">Создать новую подборку</h2>
-            <form action="/compilations/create" method="post" enctype="multipart/form-data">
+            <form action="/admin/compilations/create" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="_csrf" value="${_csrf.token}">
                 <div class="mb-3">
                     <label for="compilationName" class="form-label">Название подборки</label>
@@ -44,11 +39,9 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Создать подборку</button>
             </form>
-            </div>
-            </div>
         </div>
         <div class="mt-5">
-            <h2 class="mb-3">All Compilations</h2>
+            <h2 class="mb-3">Все подборки</h2>
             <table class="table table-bordered">
                 <thead>
                     <tr>

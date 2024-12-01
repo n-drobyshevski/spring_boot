@@ -51,6 +51,7 @@ public class CompilationController {
             throw new RuntimeException("compilation not found with ID: " + ID);
         }
         model.addAttribute("compilation", compilation);
+        model.addAttribute("books", compilation.getBooks());
         model.addAttribute("userId", UserService.getUserId(principal));
         model.addAttribute("role", UserService.getUserRole(principal));
         return "compilationDetails";
@@ -59,9 +60,9 @@ public class CompilationController {
     @PostMapping("/admin/compilations/create")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String createCompilation(@RequestParam("file1") MultipartFile file1,
-            Compilation compilation, Principal principal) throws IOException{
-        compilationService.saveCompilation(principal, compilation, file1);
-
+            @RequestParam("bookIds") List<Long> bookIds,
+            Compilation compilation, Principal principal) throws IOException {
+        compilationService.saveCompilation(principal, compilation, file1, bookIds);
         return "redirect:/admin";
     }
 
