@@ -95,7 +95,7 @@
     <!-- Подборки -->
      <div>
         <h1 class="mb-3">Создать новую подборку</h1>
-        <form action="/admin/createCompilation" method="post">
+        <form action="/compilations/create" method="post" enctype="multipart/form-data">
             <input type="hidden" name="_csrf" value="${_csrf.token}">
             <div class="mb-3">
                 <label for="compilationName" class="form-label">Название подборки</label>
@@ -113,6 +113,10 @@
                     </#list>
                 </select>
             </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Загрузить обложку</label>
+                <input type="file" class="form-control" id="image" name="file1">
+            </div>
             <button type="submit" class="btn btn-primary">Создать подборку</button>
         </form>
     </div>
@@ -125,14 +129,21 @@
                 <th>Название подборки</th>
                 <th>Описание подборки</th>
                 <th>Детали</th>
+                <th>Редактирование/Удаление</th>
             </tr>
         </thead>
         <tbody>
             <#list compilations as compilation>
                 <tr>
                     <td>${compilation.name}</td>
-                    <td>${compilation.description}</td>
-                    <td><a class="link-primary" href="../compilations/${compilation.id}">Подробнее</a></td>
+                    <td>${compilation.description}</td><td><a class="link-primary" href="../compilations/${compilation.id}">Подробнее</a></td>
+                    <td>
+                        <a href="/compilations/edit/${compilation.id}" class="btn btn-warning">Edit</a>
+                        <form action="/compilations/delete/${compilation.id}" method="post" style="display:inline;">
+                            <input type="hidden" name="_csrf" value="${_csrf.token}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             </#list>
         </tbody>

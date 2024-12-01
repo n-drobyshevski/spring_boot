@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.models.Books;
 import com.example.demo.models.Compilation;
 import com.example.demo.models.History;
+import com.example.demo.models.Image;
 import com.example.demo.models.User;
 import com.example.demo.models.enums.Role;
 import com.example.demo.repositories.ImageRepository;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -78,44 +80,5 @@ public class AdminController {
     }
 
 
-    @GetMapping("/admin/compilations/edit/{id}")
-    public String editCompilation(@PathVariable("id") Long id, Model model, Principal principal) {
-        Compilation compilation = compilationService.getCompilationById(id);
-        if (compilation == null) {
-            return "redirect:/admin";
-        }
-        model.addAttribute("compilation", compilation);
-        model.addAttribute("role", userService.getUserRole(principal));
-        model.addAttribute("userId", userService.getUserId(principal));
-        return "compilation-edit";
-    }
-
-    @PostMapping("/admin/compilations/edit")
-    public String updateCompilation(@RequestParam("id") Long id, @RequestParam("name") String name,
-            @RequestParam("description") String description) {
-        Compilation compilation = compilationService.getCompilationById(id);
-        if (compilation == null) {
-            return "redirect:/admin";
-        }
-        compilation.setName(name);
-        compilation.setDescription(description);
-        compilationService.saveCompilation(compilation);
-        return "redirect:/admin";
-    }
-
-    @PostMapping("/admin/createCompilation")
-    public String createCompilation(@RequestParam("name") String name, @RequestParam("description") String description,
-            Model model) {
-        Compilation compilation = new Compilation();
-        compilation.setName(name);
-        compilation.setDescription(description);
-        compilationService.saveCompilation(compilation);
-        return "redirect:/admin";
-    }
     
-    @PostMapping("/admin/compilations/delete/{id}")
-    public String deleteCompilation(@PathVariable("id") Long id) {
-        compilationService.deleteCompilationById(id);
-        return "redirect:/admin";
-    }
 }

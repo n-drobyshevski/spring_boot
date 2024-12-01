@@ -20,35 +20,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomUserDetailsService userDetailsService;
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
-       http
-               .authorizeRequests()
-               .antMatchers("/","/product/**","/books/**","/compilations/**","/image/**","/registration","/information", "/im/**", "/css/**"  , "/static/**")
-               .permitAll()
-               .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-               .anyRequest().authenticated()
-               .and()
-               .formLogin()
-               .loginPage("/login")
-               .permitAll()
-               .and()
-               .logout()
-               .permitAll();
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/", "/product/**", "/books/**", "/compilations/**", "/image/**", "/registration",
+                        "/information", "/im/**", "/css/**", "/static/**")
+                .permitAll()
+                .antMatchers("/admin/**")
+                .hasAuthority("ROLE_ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
 
     }
+
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
 
     }
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
 
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(new String[]{"/static/**"});
+        web.ignoring().antMatchers(new String[] { "/static/**" });
     }
 
 }

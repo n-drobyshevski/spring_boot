@@ -52,7 +52,7 @@ public class BooksService {
 
         log.info("Saving new Product.Title:{}", books.getTitle(), books.getUser().getEmail());
         Books booksFromDb = booksRepository.save(books);
-        booksFromDb.setPreviewImageID(booksFromDb.getImages().get(0).getID());
+        booksFromDb.setPreviewImageID(booksFromDb.getImages().get(0).getId());
         booksRepository.save(books);
     }
 

@@ -14,7 +14,7 @@
         <section class="text-center container">
             <div class="container marketing">
                 <h4>Edit Compilation</h4>
-                <form action="/admin/compilations/edit" method="post">
+                <form action="/compilations/edit/${compilation.id}" method="post">
                     <input type="hidden" name="id" value="${compilation.id}">
                     <div class="mb-3">
                         <label for="compilationName" class="form-label">Name</label>
@@ -24,9 +24,21 @@
                         <label for="compilationDescription" class="form-label">Description</label>
                         <textarea class="form-control" id="compilationDescription" name="description" required>${compilation.description}</textarea>
                     </div>
+                    <div class="d-flex align-items-end mb-5">
+                     <#if compilation.previewImageID??>
+                        <div class="mb-3 d-flex flex-column me-4">
+                            <label for="previewImageID" class="form-label">Current Cover Image</label>
+                            <img src="/images/${compilation.previewImageID}" alt="Cover Image" class="img-thumbnail mb-3" style="max-width: 200px;">
+                        </div>
+                    </#if>
+                    <div class="mb-3 d-flex flex-column justify-content-start">
+                        <label for="file1" class="form-label">Choose New Cover Image</label>
+                        <input type="file" class="form-control" id="file1" name="file1">
+                    </div>
+                    </div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
-                  <form action="/admin/compilations/delete/${compilation.id}" method="post" style="display:inline;">
+                <form action="/compilations/delete/${compilation.id}" method="post" style="display:inline;">
                     <input type="hidden" name="_csrf" value="${_csrf.token}">
                     <button type="submit" class="btn btn-danger mt-3">Delete</button>
                 </form>

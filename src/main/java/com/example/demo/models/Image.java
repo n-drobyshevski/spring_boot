@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "compilation")
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,5 +43,17 @@ public class Image {
     public void setFlowers(Flowers flowers) {
         this.flowers = flowers;
     }
+    
+    
+    @ManyToOne
+    @JoinColumn(name = "compilation_id")
+    private Compilation compilation;
 
+    public void setCompilation(Compilation compilation) {
+        this.compilation = compilation;
+    }
+    
+    public Long getId() {
+        return ID;
+    }
 }
