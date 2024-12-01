@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.models.Cart;
 import com.example.demo.serveces.CartService;
 import com.example.demo.serveces.UserService;
+import com.example.demo.serveces.HistoryService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,8 @@ public class CartController {
 
     private final CartService cartService;
     private final UserService userService;
-
+    private final HistoryService historyService;
+    
     @GetMapping("/cart")
     public String get(Model model, Principal principal) {
         List<Cart> carts = cartService.getAll();
@@ -64,17 +66,32 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    @PostMapping("/buyCart")
-    public String buyCart() {
+    @PostMapping("/cart/buyCart")
+    public String buyCart(@RequestParam("customerName") String customerName,
+            @RequestParam("address") String address,
+            @RequestParam("paymentMethod") String paymentMethod,
+            @RequestParam("email") String email,
+            Principal principal) {
         System.out.println("Купили корзину");
-        boolean success = cartService.buyCart();
+        boolean success = cartService.buyCart(customerName, address, paymentMethod, email);
         if (success) {
+            // Store purchase information in history
+            historyService.storePurchase(userService.getUserId(principal), customerName, address, paymentMethod, email);
             return "redirect:/success";
         } else {
             return "redirect:/cart";
         }
     }
-    
+
+    @GetMapping("/checkout")
+    public String checkout(Model model, Principal principal) {
+        model.addAttribute("role", userService.getUserRole(principal));
+        model.addAttribute("userId", userService.getUserId(principal));
+        List<Cart> carts = cartService.getAll();
+        model.addAttribute("carts", carts);
+        return "checkout";
+    }
+
     @GetMapping("/success")
     public String success(Model model, Principal principal) {
         model.addAttribute("role", userService.getUserRole(principal));

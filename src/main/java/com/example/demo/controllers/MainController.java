@@ -65,4 +65,6 @@ public class MainController {
         productServicts.deleteTovar(ID);
         return "redirect:/";
     }
+    
+    
 }

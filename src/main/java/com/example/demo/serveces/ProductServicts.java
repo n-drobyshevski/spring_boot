@@ -50,7 +50,7 @@ ProductServicts {
         }
         log.info("Saving new Product.Title:{}", product.getTitle(),product.getUser().getEmail());
         Tovar productFromDb=tovarRepository.save(product);
-        productFromDb.setPreviewImageID(productFromDb.getImages().get(0).getID());
+        productFromDb.setPreviewImageID(productFromDb.getImages().get(0).getId());
         tovarRepository.save(product);
     }
 

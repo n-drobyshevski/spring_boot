@@ -33,27 +33,21 @@ public class HistoryService {
     }
     
     public List<History> getAllHistories() {
-
-        // implementation to retrieve all histories
-
         return historyRepository.findAll();
 
     }
-    public int read(){
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("file.txt"));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-                return Integer.valueOf(line);
-            }
-            reader.close();
-        } catch (IOException e) {
-            System.out.println("An error occurred while reading the file.");
-            e.printStackTrace();
+    
+    public void storePurchase(Long userId, String customerName, String address, String paymentMethod, String email) {
+        // Create a new History entity
+        History history = new History();
+        history.setUserId(userId.intValue());
+        history.setCustomerName(customerName);
+        history.setAddress(address);
+        history.setPaymentMethod(paymentMethod);
+        history.setEmail(email);
 
-        }
-        return 0;
+        // Save the History entity to the repository
+        historyRepository.save(history);
     }
 
 }

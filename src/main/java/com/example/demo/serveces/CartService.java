@@ -52,7 +52,7 @@ public class CartService {
     }
 
     @Transactional
-    public boolean buyCart() {
+    public boolean buyCart(String customerName, String address, String paymentMethod, String email) {
         // Retrieve cart items for the user
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         Long userId = userService.getUserId(principal);
@@ -70,6 +70,10 @@ public class CartService {
             history.setCost(Integer.parseInt(cartItem.getCost()));
             history.setImage(cartItem.getImage());
             history.setUser_id(cartItem.getUser_id());
+            history.setCustomerName(customerName);
+            history.setAddress(address);
+            history.setPaymentMethod(paymentMethod);
+            history.setEmail(email);
 
             // Save the history entry
             historyRepository.save(history);

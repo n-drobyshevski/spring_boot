@@ -111,17 +111,14 @@
         
         <#if carts??>
             <!-- Выбор способа оплаты -->
-            <div>
-                <button onclick="selectPaymentMethod('cash')">Наличные</button>
-                <button onclick="selectPaymentMethod('card')">Карта</button>
-                
-                <div class="btn-group">
+            <div class="d-flex w-100 justify-content-end align-items-center">
+
+                    <button class="btn btn-primary" onclick="window.location.href='/checkout'">Оплатить</button>
                     <form action="/clearDelete" method="post">
                         <input type="hidden" name="_csrf" value="${_csrf.token}">
                         <#-- <input type="hidden" name="id" value="${cart.id}"><br>-->
-                            <input type="submit" class="btn btn-sm btn-outline-secondary" value="Очистить корзину">
+                            <input type="submit" class="btn btn-outline-danger" value="Очистить корзину">
                     </form>
-                </div>
             </div>
         </#if>
         <script>
