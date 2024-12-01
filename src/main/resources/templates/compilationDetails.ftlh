@@ -10,16 +10,21 @@
     <header>
         <#include "components/navbar.ftl">
     </header>
-    <section class="py-5 text-center container">
+    <main class="d-grid gap-5 py-5 mx-auto" style="width: 900px;">
+           <div class="w-100 d-flex justify-content-end">
+                <#if role=="ROLE_ADMIN">
+                    <a href="/admin/compilations/edit/${compilation.id}" class="btn btn-warning">Edit</a>
+                </#if>
+            </div>
+    <section class="text-center container">
         <div class="container marketing">
             <h4>${compilation.name}</h4>
             <p>${compilation.description}</p>
             <ul>
-                <#list compilation.books as book>
-                    <li>${book.title} by ${book.author}</li>
-                </#list>
+                
             </ul>
         </div>
     </section>
+    </main>
 </body>
 </html>

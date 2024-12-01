@@ -1,6 +1,5 @@
 package com.example.demo.serveces;
 
-
 import com.example.demo.models.User;
 import com.example.demo.models.enums.Role;
 import com.example.demo.repositories.UserRepository;
@@ -8,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -38,9 +39,11 @@ public class UserService {
         userRepository.save(user);
         return true;
     }
+
     public List<User> list() {
         return userRepository.findAll();
     }
+
     public void banUser(Long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
@@ -54,17 +57,18 @@ public class UserService {
         }
         userRepository.save(user);
     }
+
     public void changeUserRoles(User user, Map<String, String> form) {
-        Set<String> roles = Arrays.stream(Role.values())
-                .map(Role::name)
-                .collect(Collectors.toSet());
-        user.getRoles().clear();
-        for (String key : form.keySet()) {
-            if (roles.contains(key)) {
-                user.getRoles().add(Role.valueOf(key));
-            }
+        // Extract the new role from the form
+        String newRole = form.get("role");
+
+        // Check if the new role is different from the current role
+        if (user.getRoles().stream().noneMatch(role -> role.name().equals(newRole))) {
+            // Clear existing roles and set the new role
+            user.getRoles().clear();
+            user.getRoles().add(Role.valueOf(newRole));
+            userRepository.save(user);
         }
-        userRepository.save(user);
     }
 
     public String getUserRole(Principal principal) {
@@ -89,6 +93,12 @@ public class UserService {
         String role = user.getRoles().iterator().next().name();
         log.info("User with email: {} has role: {}", email, role);
         return role;
+    }
+
+    public User getUserById(Long id) {
+
+        return userRepository.findById(id).orElse(null);
+
     }
 
     public Long getUserId(Principal principal) {

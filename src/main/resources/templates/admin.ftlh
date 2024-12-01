@@ -117,13 +117,14 @@
         </form>
     </div>
    
-    <div>
+ <div>
     <h1 class="mb-3">Все подборки</h1>
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Название подборки</th>
                 <th>Описание подборки</th>
+                <th>Детали</th>
             </tr>
         </thead>
         <tbody>
@@ -131,6 +132,7 @@
                 <tr>
                     <td>${compilation.name}</td>
                     <td>${compilation.description}</td>
+                    <td><a class="link-primary" href="../compilations/${compilation.id}">Подробнее</a></td>
                 </tr>
             </#list>
         </tbody>

@@ -43,6 +43,7 @@ public class Books {
     @JoinColumn
     private User user;
 
+    
     @ManyToMany(mappedBy = "books")
     private Set<Compilation> compilations;
 

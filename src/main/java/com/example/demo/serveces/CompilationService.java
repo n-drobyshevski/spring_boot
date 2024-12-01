@@ -17,8 +17,8 @@ public class CompilationService {
         return compilationRepository.findAll();
     }
 
-    public Compilation getCompilationById(Long id) {
-        return compilationRepository.findById(id).orElse(null);
+    public Compilation getCompilationById(Long ID) {
+        return compilationRepository.findById(ID).orElse(null);
     }
 
     public Compilation saveCompilation(Compilation collection) {
@@ -26,6 +26,10 @@ public class CompilationService {
     }
 
     public void deleteCompilation(Long id) {
+        compilationRepository.deleteById(id);
+    }
+    
+    public void deleteCompilationById(Long id) {
         compilationRepository.deleteById(id);
     }
 }

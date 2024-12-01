@@ -1,28 +1,16 @@
 <!DOCTYPE html>
-<html lang="ru">
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <title>Dead Poets Society</title>
- <link rel="stylesheet" href="/static/css/login.css"> 
- <link rel="stylesheet" href="/css/base.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Edit Compilation</title>
 </head>
-
-<body >
-  <header>
-    <#include "components/navbar.ftl">
-  </header>
-  <br>
-<section class="py-5 text-center container">
-    <div class="row py-lg-5">
-        <div class="col-lg-6 col-md-8 mx-auto">
-        </div>
-    </div>
-</section>
 <body>
+    <header>
+        <#include "components/navbar.ftl">
+    </header>
+    <main class="d-grid gap-5 py-5 mx-auto" style="width: 900px;">
 <h2 style="text-align: center">Информация о пользователе</h2>
 <hr>
 <div style="text-align: center">
@@ -32,12 +20,12 @@
     <br>
     Почта:<b>${user.email}</b>
     <hr>
-<a class="btn btn-dark" href="/logout">Выйти</a>
+<a class="btn btn-primary" href="/logout">Выйти</a>
 <br>
 </div>
 <#if errorMessage??>
     <h2 style="color: red">${errorMessage}</h2>
 </#if>
-<br>
+    </main>
 </body>
 </html>

@@ -10,21 +10,24 @@
     <header>
         <#include "components/navbar.ftl">
     </header>
-    <section class="py-5 text-center container">
-        <div class="container marketing">
-            <h4>Compilations</h4>
-            <#list compilations as compilation>
-                <div class="compilation-item">
-                    <h5>${compilation.name}</h5>
-                    <p>${compilation.description}</p>
-                    <ul>
-                        <#list compilation.books as book>
-                            <li>${book.title} by ${book.author}</li>
-                        </#list>
-                    </ul>
+     <main class="d-grid gap-5 py-5 mx-auto" style="width: 900px;">
+        <section class="text-center container">
+            <div class="container marketing">
+                <h4 class="mb-4">Compilations</h4>
+                <div class="row justify-content-center">
+                    <#list compilations as compilation>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">${compilation.name}</h5>
+                                    <a href="/compilations/${compilation.id}" class="btn btn-primary">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </#list>
                 </div>
-            </#list>
-        </div>
-    </section>
+            </div>
+        </section>
+    </main>
 </body>
 </html>

@@ -45,10 +45,10 @@ public class AdminController {
         model.addAttribute("images", imageRepository.findAll());
         model.addAttribute("role", userService.getUserRole(principal));
         model.addAttribute("userId", userService.getUserId(principal));
+        
         List<Compilation> compilations = compilationService.getAllCompilations();
         model.addAttribute("compilations", compilations);
 
-    
         return "admin";
     }
 
@@ -66,8 +66,40 @@ public class AdminController {
     }
 
     @PostMapping("/admin/user/edit")
-    public String userEdit(@RequestParam("userId") User user, @RequestParam Map<String, String> form) {
+    public String userEdit(@RequestParam("userId") Long userId, @RequestParam Map<String, String> form) {
+        User user = userService.getUserById(userId);
+        if (user == null) {
+            return "redirect:/admin";
+        }
+
+        // Update the user's role if it is different from the current role
         userService.changeUserRoles(user, form);
+        return "redirect:/admin";
+    }
+
+
+    @GetMapping("/admin/compilations/edit/{id}")
+    public String editCompilation(@PathVariable("id") Long id, Model model, Principal principal) {
+        Compilation compilation = compilationService.getCompilationById(id);
+        if (compilation == null) {
+            return "redirect:/admin";
+        }
+        model.addAttribute("compilation", compilation);
+        model.addAttribute("role", userService.getUserRole(principal));
+        model.addAttribute("userId", userService.getUserId(principal));
+        return "compilation-edit";
+    }
+
+    @PostMapping("/admin/compilations/edit")
+    public String updateCompilation(@RequestParam("id") Long id, @RequestParam("name") String name,
+            @RequestParam("description") String description) {
+        Compilation compilation = compilationService.getCompilationById(id);
+        if (compilation == null) {
+            return "redirect:/admin";
+        }
+        compilation.setName(name);
+        compilation.setDescription(description);
+        compilationService.saveCompilation(compilation);
         return "redirect:/admin";
     }
 
@@ -78,6 +110,12 @@ public class AdminController {
         compilation.setName(name);
         compilation.setDescription(description);
         compilationService.saveCompilation(compilation);
+        return "redirect:/admin";
+    }
+    
+    @PostMapping("/admin/compilations/delete/{id}")
+    public String deleteCompilation(@PathVariable("id") Long id) {
+        compilationService.deleteCompilationById(id);
         return "redirect:/admin";
     }
 }

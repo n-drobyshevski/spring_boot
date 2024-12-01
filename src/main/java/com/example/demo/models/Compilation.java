@@ -10,7 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import java.util.Set;
-import com.example.demo.models.Books; 
+import com.example.demo.models.Books;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import lombok.Data;
@@ -37,5 +38,6 @@ public class Compilation {
         joinColumns = @JoinColumn(name = "compilation_id"),
         inverseJoinColumns = @JoinColumn(name = "book_id")
     )
+    
     private Set<Books> books;
 }
