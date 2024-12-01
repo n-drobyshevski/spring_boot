@@ -20,6 +20,7 @@
         <tr>
           <th>ID</th>
           <th>ФИО</th>
+          <th>Email</th>
           <th>Адрес</th>
           <th>Способ оплаты</th>
           <th>Статус</th>
@@ -31,6 +32,7 @@
           <tr>
             <td>${order.id}</td>
             <td>${order.customerName}</td>
+            <th>${order.email}</th>
             <td>${order.address}</td>
             <td>${order.paymentMethod}</td>
             <td>${order.status}</td>

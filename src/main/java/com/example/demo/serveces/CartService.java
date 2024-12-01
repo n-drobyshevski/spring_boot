@@ -89,7 +89,14 @@ public class CartService {
             order.setEmail(email);
             order.setUserId(userId);
             order.setStatus("В обработке");
-            order.setBookTitles(cartItem.getNameproduct());
+
+            String bookTitle = cartItem.getNameproduct();
+            if (bookTitle != null) {
+                order.setBookTitles(bookTitle);
+            } else {
+                log.warn("Encountered null book title for cart item ID: {}", cartItem.getId());
+                continue;
+            }
 
             // Save the order entry
             orderRepository.save(order);

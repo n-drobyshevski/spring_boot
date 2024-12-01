@@ -83,10 +83,10 @@ public class OrderController {
     @GetMapping("/orders/my")
     public String viewMyOrders(Model model, User user, Principal principal) {
         
-        String email = principal.getName();
-        List<Order> orders = orderService.getOrdersByEmail(email);
+        Long userId = userService.getUserId(principal);
+        List<Order> orders = orderService.getOrdersByUserId(userId);
         
-        logger.info("Fetching orders for email: {}", email);
+        logger.info("Fetching orders for email: {}", userId);
         logger.info("Orders: {}", orders);
 
         model.addAttribute("orders", orders);

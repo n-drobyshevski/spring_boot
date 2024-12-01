@@ -28,7 +28,7 @@ public class CartController {
     private final UserService userService;
     private final OrderService orderService;
     private static final Logger logger = LoggerFactory.getLogger(CartController.class);
-    
+
     @GetMapping("/cart")
     public String get(Model model, Principal principal) {
         List<Cart> carts = cartService.getAll();
@@ -70,40 +70,52 @@ public class CartController {
         cartService.clearCart(userService.getUserId(principal));
         return "redirect:/cart";
     }
-
+    
     @PostMapping("/cart/buyCart")
     public String buyCart(@RequestParam("customerName") String customerName,
             @RequestParam("address") String address,
             @RequestParam("paymentMethod") String paymentMethod,
             @RequestParam("email") String email,
             Principal principal) {
-        System.out.println("Купили корзину");
         Long userId = userService.getUserId(principal);
         logger.info("Attempting to buy cart for user ID: {}", userId);
-        boolean success = cartService.buyCart(customerName, address, paymentMethod, email);
-        if (success) {
-            // Create a new order
-            List<Cart> cartItems = cartService.getAll();
-            StringBuilder bookTitles = new StringBuilder();
-            for (Cart cartItem : cartItems) {
-                bookTitles.append(cartItem.getNameproduct()).append(", ");
-            }
-            Order order = new Order();
-            order.setCustomerName(customerName);
-            order.setAddress(address);
-            order.setPaymentMethod(paymentMethod);
-            order.setEmail(email);
-            order.setUserId(userId);
-            order.setStatus("В обработке");
-            order.setBookTitles(bookTitles.toString());
-            orderService.createOrder(order);
-            logger.info("Order created for user ID: {}", userId);
-            logger.info("Order details: {}", order);
-            return "redirect:/success";
-        } else {
-            logger.warn("Failed to buy cart for user ID: {}", userId);
+
+        // Retrieve cart items for the user
+        List<Cart> cartItems = cartService.getAll();
+        if (cartItems.isEmpty()) {
+            logger.warn("Cart is empty for user ID: {}", userId);
             return "redirect:/cart";
         }
+
+        // Process the purchase
+        StringBuilder bookTitles = new StringBuilder();
+        for (Cart cartItem : cartItems) {
+            if (cartItem.getNameproduct() == null || cartItem.getNameproduct().isEmpty()) {
+                logger.warn("Encountered null cart item for user ID: {}", userId);
+                continue;
+            }
+            logger.info("Cart item: {}", cartItem);
+            bookTitles.append(cartItem.getNameproduct()).append(", ");
+        }
+
+        // Create a new order
+        Order order = new Order();
+        order.setCustomerName(customerName);
+        order.setAddress(address);
+        order.setPaymentMethod(paymentMethod);
+        order.setEmail(email);
+        order.setUserId(userId);
+        order.setStatus("В обработке");
+        order.setBookTitles(bookTitles.toString());
+        orderService.createOrder(order);
+
+        logger.info("Order created for user ID: {}", userId);
+        logger.info("Order details: {}", order);
+
+        // Clear the cart
+        cartService.clearCart(userId);
+
+        return "redirect:/success";
     }
 
     @GetMapping("/checkout")
