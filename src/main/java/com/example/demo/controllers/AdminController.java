@@ -116,7 +116,7 @@ public class AdminController {
         model.addAttribute("role", userService.getUserRole(principal));
         model.addAttribute("userId", userService.getUserId(principal));
         Long userId = userService.getUserId(principal);
-        List<Order> orders = orderService.getOrdersByUserId(userId);
+        List<Order> orders = orderService.getAllOrders();
         model.addAttribute("orders", orders);
 
         return "admin-orders";
