@@ -38,7 +38,6 @@ public class MainController {
         model.addAttribute("cart", cartService.list());
         model.addAttribute("user", productServicts.getUserByPrincipal(principal));
         model.addAttribute("userId", UserService.getUserId(principal));
-        model.addAttribute("historys", historyService.getAll());
         model.addAttribute("role", UserService.getUserRole(principal));
         return "head"; 
     }

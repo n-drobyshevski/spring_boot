@@ -8,7 +8,7 @@
         <a class="nav-link active" aria-current="page" href="/books">Книги</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/podborki">Подборки</a>
+        <a class="nav-link" href="/compilations">Подборки</a>
       </li>
       
       <#if role??> <!-- нет логина нет и корзины -->

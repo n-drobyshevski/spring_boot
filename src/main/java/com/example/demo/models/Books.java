@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "books")
@@ -41,6 +42,9 @@ public class Books {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn
     private User user;
+
+    @ManyToMany(mappedBy = "books")
+    private Set<Compilation> compilations;
 
     //private LocalDateTime dateOfCreated;
     //@PrePersist

@@ -34,6 +34,8 @@ public class HistoryService {
     
     public List<History> getAllHistories() {
 
+        // implementation to retrieve all histories
+
         return historyRepository.findAll();
 
     }
