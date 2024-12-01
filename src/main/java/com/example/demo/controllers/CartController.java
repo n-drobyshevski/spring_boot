@@ -4,6 +4,8 @@ import com.example.demo.models.Cart;
 import com.example.demo.serveces.CartService;
 import com.example.demo.serveces.UserService;
 import com.example.demo.serveces.HistoryService;
+import com.example.demo.serveces.OrderService;
+import com.example.demo.models.Order;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,7 +24,7 @@ public class CartController {
 
     private final CartService cartService;
     private final UserService userService;
-    private final HistoryService historyService;
+    private final OrderService orderService;
     
     @GetMapping("/cart")
     public String get(Model model, Principal principal) {
@@ -73,10 +75,24 @@ public class CartController {
             @RequestParam("email") String email,
             Principal principal) {
         System.out.println("Купили корзину");
+        Long userId = userService.getUserId(principal);
         boolean success = cartService.buyCart(customerName, address, paymentMethod, email);
         if (success) {
-            // Store purchase information in history
-            historyService.storePurchase(userService.getUserId(principal), customerName, address, paymentMethod, email);
+            // Create a new order
+            List<Cart> cartItems = cartService.getAll();
+            StringBuilder bookTitles = new StringBuilder();
+            for (Cart cartItem : cartItems) {
+                bookTitles.append(cartItem.getNameproduct()).append(", ");
+            }
+            Order order = new Order();
+            order.setCustomerName(customerName);
+            order.setAddress(address);
+            order.setPaymentMethod(paymentMethod);
+            order.setEmail(email);
+            order.setUserId(userId);
+            order.setStatus("В обработке");
+            order.setBookTitles(bookTitles.toString());
+            orderService.createOrder(order);
             return "redirect:/success";
         } else {
             return "redirect:/cart";

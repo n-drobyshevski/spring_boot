@@ -11,6 +11,9 @@
     <#include "components/navbar.ftl">
   </header>
   <main class="container py-5">
+    <div class="mb-4">
+      <a href="/admin" class="btn btn-outline-secondary">Назад к панели управления</a>
+    </div>
     <h1 class="mb-4">Управление книгами</h1>
     <div>
       <h2 class="mb-3">Добавить новую книгу</h2>
@@ -70,9 +73,6 @@
           </#list>
         </tbody>
       </table>
-    </div>
-    <div class="mt-4">
-      <a href="/admin" class="btn btn-outline-secondary">Назад к панели управления</a>
     </div>
   </main>
   <#include "components/footer.ftl">

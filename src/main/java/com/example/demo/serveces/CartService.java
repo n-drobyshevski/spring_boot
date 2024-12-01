@@ -4,10 +4,12 @@ import com.example.demo.models.Cart;
 import com.example.demo.models.Books;
 import com.example.demo.models.History;
 import com.example.demo.models.User;
+import com.example.demo.models.Order;
 import com.example.demo.models.enums.Role;
 import com.example.demo.repositories.CartRepository;
 import com.example.demo.repositories.HistoryRepository;
 import com.example.demo.serveces.UserService; 
+import com.example.demo.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,9 +30,18 @@ import java.security.Principal;
 @Slf4j
 @RequiredArgsConstructor
 public class CartService {
+    private final CartRepository cartRepository;
     private final UserService userService;
-    public final CartRepository cartRepository;
     public final HistoryRepository historyRepository;
+    
+    @Autowired
+    public CartService(UserService userService, HistoryRepository historyRepository, OrderRepository orderRepository, CartRepository cartRepository) {
+        this.userService = userService;
+        this.historyRepository = historyRepository;
+        this.orderRepository = orderRepository;
+        this.cartRepository = cartRepository;
+    }
+    public final OrderRepository orderRepository;
 
     public boolean addToCart(Cart cart) {
         if (cartRepository.findAllByNameProduct(cart.getNameproduct()) != null) {
@@ -62,21 +73,20 @@ public class CartService {
             return false;
         }
 
-        // Process the purchase (e.g., move items to purchase history)
+        // Process the purchase
         for (Cart cartItem : cartItems) {
-            // Create a new history entry
-            History history = new History();
-            history.setNameproduct(cartItem.getNameproduct());
-            history.setCost(Integer.parseInt(cartItem.getCost()));
-            history.setImage(cartItem.getImage());
-            history.setUser_id(cartItem.getUser_id());
-            history.setCustomerName(customerName);
-            history.setAddress(address);
-            history.setPaymentMethod(paymentMethod);
-            history.setEmail(email);
+            // Create a new order entry
+            Order order = new Order();
+            order.setCustomerName(customerName);
+            order.setAddress(address);
+            order.setPaymentMethod(paymentMethod);
+            order.setEmail(email);
+            order.setUserId(userId);
+            order.setStatus("В обработке");
+            order.setBookTitles(cartItem.getNameproduct());
 
-            // Save the history entry
-            historyRepository.save(history);
+            // Save the order entry
+            orderRepository.save(order);
         }
 
         // Clear the cart
