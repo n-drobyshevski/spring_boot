@@ -53,7 +53,7 @@
         <#if books??>
           <#list books as book>
             <#if book?index < 20>
-              <div class="d-flex flex-column mb-4" style="flex: 0 0 calc(20% - 10px); margin-right: 10px;">
+              <a href="/books/${book.id}" class="d-flex flex-column mb-4 book-card text-body" style="flex: 0 0 calc(20% - 10px); margin-right: 10px; text-decoration: none;">
                 <div class="card h-100 shadow-sm">
                   <img src="/images/${book.previewImageID}" class="card-img-top" alt="${book.title}" style="height: 150px; object-fit: cover;">
                   <div class="card-body p-2">
@@ -65,7 +65,7 @@
                     </p>
                   </div>
                 </div>
-              </div>
+              </a>
             </#if>
           </#list>
         </#if>

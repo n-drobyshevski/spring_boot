@@ -5,12 +5,14 @@ import com.example.demo.models.Compilation;
 import com.example.demo.models.History;
 import com.example.demo.models.Image;
 import com.example.demo.models.User;
+import com.example.demo.models.Order;
 import com.example.demo.models.enums.Role;
 import com.example.demo.repositories.ImageRepository;
 import com.example.demo.serveces.HistoryService;
 import com.example.demo.serveces.BooksService;
 import com.example.demo.serveces.UserService;
 import com.example.demo.serveces.CompilationService;
+import com.example.demo.serveces.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -35,8 +37,9 @@ public class AdminController {
     private final UserService userService;
     private final HistoryService historyService;
     private final ImageRepository imageRepository;
-    private final BooksService booksService;
     private final CompilationService compilationService;
+    private final OrderService orderService;
+    private final BooksService booksService;
 
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
@@ -48,8 +51,6 @@ public class AdminController {
         model.addAttribute("role", userService.getUserRole(principal));
         model.addAttribute("userId", userService.getUserId(principal));
         
-        List<Compilation> compilations = compilationService.getAllCompilations();
-        model.addAttribute("compilations", compilations);
 
         return "admin";
     }
@@ -79,6 +80,55 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    @GetMapping("/admin/users")
+    public String manageUsers(Model model, Principal principal) {
+        List<History> histories = historyService.getAllHistories();
+        model.addAttribute("histories", histories);
+        model.addAttribute("users", userService.list());
+        model.addAttribute("books", booksService.list());
+        model.addAttribute("images", imageRepository.findAll());
+        model.addAttribute("role", userService.getUserRole(principal));
+        model.addAttribute("userId", userService.getUserId(principal));
+
+        return "admin-users";
+    }
+
+    @GetMapping("/admin/compilations")
+    public String manageCompilations(Model model, Principal principal) {
+        List<History> histories = historyService.getAllHistories();
+        model.addAttribute("histories", histories);
+        model.addAttribute("users", userService.list());
+        model.addAttribute("books", booksService.list());
+        model.addAttribute("images", imageRepository.findAll());
+        model.addAttribute("role", userService.getUserRole(principal));
+        model.addAttribute("userId", userService.getUserId(principal));
+        
+        List<Compilation> compilations = compilationService.getAllCompilations();
+        model.addAttribute("compilations", compilations);
+        return "admin-compilations";
+    }
+    
+    @GetMapping("/admin/orders")
+    public String manageOrders(Model model, Principal principal) {
+        List<History> histories = historyService.getAllHistories();
+        model.addAttribute("histories", histories);
+        model.addAttribute("users", userService.list());
+        model.addAttribute("role", userService.getUserRole(principal));
+        model.addAttribute("userId", userService.getUserId(principal));
+        Long userId = userService.getUserId(principal);
+        List<Order> orders = orderService.getOrdersByUserId(userId);
+        model.addAttribute("orders", orders);
+
+        return "admin-orders";
+    }
+
+    @GetMapping("/admin/books")
+    public String manageBooks(Model model, Principal principal) {
+        model.addAttribute("books", booksService.list());
+        model.addAttribute("role", userService.getUserRole(principal));
+        model.addAttribute("userId", userService.getUserId(principal));
+        return "admin-books";
+    }
 
     
 }

@@ -16,29 +16,34 @@
   <header>
     <#include "components/navbar.ftl">
   </header>
-<main class="px-5 pt-5">
- <h2 style="text-align: center">Информация о книге</h2>
- <hr>
- <div class="d-flex w-100 px-5">
-     <img src="/images/${book.previewImageID}" alt="${book.title}">
-    <div class="ms-5 d-flex flex-column flex-fill align-items-start" style="text-align: center">
-        <div class="flex-fill">
-          <h3>Title: ${book.title}</h3>
-          <h4>Author: ${book.author}</h4>
-          <h4>${book.genre}</h4>
-          <p>${book.description}</p>
-        </div>
-        <div class="d-flex w-100 justify-content-between">
-          <h3>${book.price}</h3>
-          <form class="" action="/AddToCart" method="post">
-            <div class="btn-group">
-              <input type="hidden" name="_csrf" value="${_csrf.token}">
-              <input type="submit" class="btn btn-sm btn-primary" value="Добавить в корзину">   
-            </div>
-          </form>
-        <div>
+<main class="container py-5">
+  <h2 class="text-center mb-4">Информация о книге</h2>
+  <hr>
+  <div class="row">
+    <div class="col-md-4">
+      <img src="/images/${book.previewImageID}" alt="${book.title}" class="img-fluid rounded shadow-sm">
     </div>
- </div>
+    <div class="col-md-8">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h3 class="card-title">Title: ${book.title}</h3>
+          <h4 class="card-subtitle mb-2 text-muted">Author: ${book.author}</h4>
+          <h5 class="card-subtitle mb-3 text-muted">${book.genre}</h5>
+          <p class="card-text">${book.description}</p>
+          <div class="d-flex justify-content-between align-items-center mt-4">
+            <h3 class="text-primary">${book.price} бел.руб</h3>
+            <form action="/AddToCart" method="post">
+              <input type="hidden" name="_csrf" value="${_csrf.token}">
+              <input type="hidden" name="nameproduct" value="${book.title}">
+              <input type="hidden" name="cost" value="${book.price}">
+              <input type="hidden" name="image" value="/images/${book.previewImageID}">
+              <button type="submit" class="btn btn-primary">Добавить в корзину</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
  <#if errorMessage??>
      <h2 style="color: red">${errorMessage}</h2>
  </#if>

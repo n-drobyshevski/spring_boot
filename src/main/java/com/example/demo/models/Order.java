@@ -33,7 +33,8 @@ public class Order {
     @Column(name="bookTitles")
     private String bookTitles;
 
-
+    @Column(name = "user_id")
+    private Long userId;
 
     public Order(Long id, String customerName, String address, String paymentMethod, String email, String status, String bookTitles) {
         this.id = id;
