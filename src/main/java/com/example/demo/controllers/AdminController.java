@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.models.Books;
 import com.example.demo.models.Compilation;
 import com.example.demo.models.History;
 import com.example.demo.models.User;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.List;
 
 import java.io.IOException;
@@ -43,6 +45,10 @@ public class AdminController {
         model.addAttribute("images", imageRepository.findAll());
         model.addAttribute("role", userService.getUserRole(principal));
         model.addAttribute("userId", userService.getUserId(principal));
+        List<Compilation> compilations = compilationService.getAllCompilations();
+        model.addAttribute("compilations", compilations);
+
+    
         return "admin";
     }
 

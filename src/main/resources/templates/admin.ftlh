@@ -117,7 +117,25 @@
         </form>
     </div>
    
-    
+    <div>
+    <h1 class="mb-3">Все подборки</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Название подборки</th>
+                <th>Описание подборки</th>
+            </tr>
+        </thead>
+        <tbody>
+            <#list compilations as compilation>
+                <tr>
+                    <td>${compilation.name}</td>
+                    <td>${compilation.description}</td>
+                </tr>
+            </#list>
+        </tbody>
+    </table>
+</div>
 
 
      <div>
