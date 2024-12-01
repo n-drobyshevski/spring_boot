@@ -52,6 +52,7 @@
                 Пожалуйста, введите ваш email.
             </div>
         </div>
+        <input type="hidden" name="_csrf" value="${_csrf.token}">
         <button type="submit" class="btn btn-primary">Подтвердить покупку</button>
         <a href="/cart" class="btn btn-secondary">Вернуться в корзину</a>
 

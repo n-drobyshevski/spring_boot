@@ -1,12 +1,14 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.Books;
+import com.example.demo.models.Compilation;
 import com.example.demo.models.Tovar;
 import com.example.demo.serveces.BooksService;
 import com.example.demo.serveces.CartService;
 import com.example.demo.serveces.HistoryService;
 import com.example.demo.serveces.ProductServicts;
 import com.example.demo.serveces.UserService;
+import com.example.demo.serveces.CompilationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,7 @@ public class MainController {
     private final UserService UserService;
     public final CartService cartService;
     public final HistoryService historyService;
+    private final CompilationService compilationService;
 
     @GetMapping("/")
     public String product(@RequestParam(name = "title", required = false) String title, Principal principal,
@@ -39,6 +42,8 @@ public class MainController {
         model.addAttribute("user", productServicts.getUserByPrincipal(principal));
         model.addAttribute("userId", UserService.getUserId(principal));
         model.addAttribute("role", UserService.getUserRole(principal));
+        List<Compilation> compilations = compilationService.getAllCompilations();
+        model.addAttribute("compilations", compilations);
         return "head"; 
     }
     

@@ -14,7 +14,7 @@
         <section class="text-center container">
             <div class="container marketing">
                 <h4>Edit Compilation</h4>
-                <form action="/compilations/edit/${compilation.id}" method="post">
+                <form action="/compilations/edit/${compilation.id}" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="${compilation.id}">
                     <div class="mb-3">
                         <label for="compilationName" class="form-label">Name</label>
@@ -36,6 +36,8 @@
                         <input type="file" class="form-control" id="file1" name="file1">
                     </div>
                     </div>
+                    
+                    <input type="hidden" name="_csrf" value="${_csrf.token}">
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
                 <form action="/compilations/delete/${compilation.id}" method="post" style="display:inline;">

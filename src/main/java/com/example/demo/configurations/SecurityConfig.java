@@ -26,8 +26,6 @@ public class SecurityConfig {
                 .antMatchers("/", "/product/**", "/books/**", "/compilations/**", "/image/**", "/cart/**", "/registration",
                         "/information", "/im/**", "/css/**", "/static/**")
                 .permitAll()
-                .antMatchers("/admin/**")
-                .hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -25,56 +25,55 @@
     </div>
     <!-- Секция с подборками книг -->
     <div class="collections">
-      <div class="collection-item">
-        <a href="loh5.html" style=" text-decoration: none">
-          <img src="im/12.jpg" alt="Топ 10 лучших книг">
-          <p>Топ 10 лучших книг</p>
-        </a>
-      </div>
-      <div class="collection-item">
-        <img src="im/13.jpg" alt="20 книг, которые нужно прочитать до 30">
-        <p>20 книг, которые нужно прочитать до 30</p>
-      </div>
-      <div class="collection-item">
-        <img src="im/14.jpg" alt="Книги про отношения">
-        <p>Книги про отношения</p>
-      </div>
-      <div class="collection-item">
-        <img src="im/15.jpg" alt="Топ 10 лучших книг">
-        <p>Топ 10 лучших книг</p>
-      </div>
-      <div class="collection-item">
-        <img src="im/16.jpg" alt="20 книг, которые нужно прочитать до 30">
-        <p>20 книг, которые нужно прочитать до 30</p>
-      </div>
-      <div class="collection-item">
-        <img src="im/17.jpg" alt="Книги про отношения">
-        <p>Книги про отношения</p>
-      </div>
-    </div>
+    <#if compilations??>
+        <#list compilations as compilation>
+            <#if compilation?index < 6>
+                <div class="collection-item">
+                    <a href="/compilations/${compilation.id}" style="text-decoration: none">
+                        <div class="card h-100 shadow-sm">
+                          <#if compilation.previewImageID??>
+                              <img src="/images/${compilation.previewImageID}" class="card-img-top" alt="${compilation.name}">
+                                  <#else>
+                                      <img src="im/12.jpg" class="card-img-top" alt="Default Cover Image">
+                                  </#if>
+                            <div class="card-body p-2">
+                                <p class="card-text">${compilation.name}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </#if>
+        </#list>
+    </#if>
+</div>
     <!-- Секция со всеми книгами -->
-    <div class="" style="max-width:1200px;margin:0 auto;padding: 60px 20px;">
-      <div class="d-flex flex-wrap w-100">
+     <div class="" style="max-width:1200px;margin:0 auto;padding: 60px 20px;">
+       <h2 class="mb-4">Our Books</h2>
+      <div class="d-flex flex-wrap justify-content-between">
         <#if books??>
           <#list books as book>
             <#if book?index < 20>
-              <div class="card mb-4 flex-fill h-100 me-4 bg-blue rounded shadow-sm" style="max-width: 30%;">
-                <img src="" class="card-img-top">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    ${book.title}
-                  </h5>
-                  <p class="card-text">
-                    ${book.author}
-                  </p>
+              <div class="d-flex flex-column mb-4" style="flex: 0 0 calc(20% - 10px); margin-right: 10px;">
+                <div class="card h-100 shadow-sm">
+                  <img src="/images/${book.previewImageID}" class="card-img-top" alt="${book.title}" style="height: 150px; object-fit: cover;">
+                  <div class="card-body p-2">
+                    <h6 class="card-title mb-1">
+                      ${book.title}
+                    </h6>
+                    <p class="card-text mb-1">
+                      ${book.author}
+                    </p>
+                  </div>
                 </div>
               </div>
             </#if>
           </#list>
         </#if>
       </div>
+      <div class="text-center mt-4">
+        <a href="/books" class="btn btn-primary">Все книги</a>
+      </div>
     </div>
-  </div>
   <#include "components/footer.ftl">
 </body>
 

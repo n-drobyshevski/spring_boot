@@ -40,34 +40,35 @@
 </form>
 </div>
 <div class="d-flex flex-wrap w-100" style="padding: 0 96px" >
-    <#list books as book>
-        <form class="flex-fill" action="/AddToCart" onsubmit="return validateAndFormatCost()" method="post" style="min-width:100px;max-width:25%">
-        <div class="d-flex flex-wrap">
-                    <div class="card mb-4 mw-20 flex-fill h-100 me-4 bg-blue rounded shadow-sm" style="">
-                        <!-- Обёртываем изображение книги ссылкой -->
-                        <a href="/books/${book.id}">
-                            <img class="card-img-top" src="/images/${book.previewImageID}" alt="${book.title}">
+    <div class="container mt-4">
+    <div class="row">
+        <#list books as book>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <!-- Обёртываем изображение книги ссылкой -->
+                    <a href="/books/${book.id}">
+                        <img class="card-img-top" src="/images/${book.previewImageID}" alt="${book.title}">
+                    </a>
+                    <div class="card-body d-flex flex-column">
+                        <!-- Обёртываем название книги ссылкой -->
+                        <a href="/books/${book.id}" class="card-title h5 text-decoration-none text-dark">
+                            ${book.title}
                         </a>
-                        <div class="card-body">
-                            <!-- Обёртываем название книги ссылкой -->
-                            <a href="/books/${book.id}" class="card-text" style="text-decoration: none; color: inherit;">
-                                <p>${book.title}</p>
-                            </a>
+                        <p class="card-text mt-auto">Стоимость: ${book.price} бел.руб</p>
+                        <form action="/AddToCart" onsubmit="return validateAndFormatCost()" method="post">
                             <input type="hidden" name="nameproduct" value="${book.title}" readonly>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <input type="hidden" name="_csrf" value="${_csrf.token}">
-                                    <input type="submit" class="btn btn-sm btn-outline-secondary" value="Добавить в корзину">
-                                </div>
-                                <small class="text-body-secondary">Стоимость: ${book.price} бел.руб </small>
-                                <input type="hidden" name="cost" value="${book.price!''}" readonly>
-                                <input type="hidden" name="image" value="/images/${book.previewImageID}">
-                            </div>
-                        </div>
+                            <input type="hidden" name="_csrf" value="${_csrf.token}">
+                            <input type="hidden" name="cost" value="${book.price!''}" readonly>
+                            <input type="hidden" name="image" value="/images/${book.previewImageID}">
+                            <button type="submit" class="btn btn-outline-primary btn-block mt-3">Добавить в корзину</button>
+                        </form>
                     </div>
+                </div>
             </div>
-        </form>
-    </#list>
+        </#list>
+    </div>
+</div>
+
 </div>
 
 
