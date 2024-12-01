@@ -7,6 +7,9 @@ import com.example.demo.serveces.CartService;
 import com.example.demo.serveces.OrderService;
 import com.example.demo.serveces.UserService;
 import lombok.extern.slf4j.Slf4j;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,7 @@ public class OrderController {
     private final OrderService orderService;
     private final CartService cartService;
     private final UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
     public OrderController(OrderService orderService, CartService cartService, UserService userService) {
         this.orderService = orderService;
@@ -79,8 +83,13 @@ public class OrderController {
 
     @GetMapping("/my")
     public String viewMyOrders(Model model, User user, Principal principal) {
-        String email = user.getEmail();
+        
+        String email = principal.getName();
         List<Order> orders = orderService.getOrdersByEmail(email);
+        
+        logger.info("Fetching orders for email: {}", email);
+        logger.info("Orders: {}", orders);
+
         model.addAttribute("orders", orders);
         model.addAttribute("role", userService.getUserRole(principal));
         model.addAttribute("userId", userService.getUserId(principal));
@@ -91,7 +100,7 @@ public class OrderController {
     public String viewAllOrders(Model model) {
         List<Order> orders = orderService.getAllOrders();
         model.addAttribute("orders", orders);
-        return "admin-orders"; // шаблон FTLH для отображения всех заказов
+        return "redirect:/orders/admin"; // шаблон FTLH для отображения всех заказов
     }
 
     @PostMapping("/update-status")
