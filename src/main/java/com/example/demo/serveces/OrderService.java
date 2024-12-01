@@ -44,4 +44,9 @@ public class OrderService {
         order.setStatus(status);
         orderRepository.save(order);
     }
+    
+    @Transactional
+    public void deleteOrder(Long orderId) {
+        orderRepository.deleteById(orderId);
+    }
 }

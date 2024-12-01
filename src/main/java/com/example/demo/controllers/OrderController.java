@@ -21,7 +21,6 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/orders")
 public class OrderController {
 
     private final OrderService orderService;
@@ -62,7 +61,7 @@ public class OrderController {
 //        return "redirect:/orders/my"; // Перенаправляем на страницу с заказами
 //    }
 
-    @PostMapping("/create")
+    @PostMapping("/orders/create")
     public String createOrder(@ModelAttribute("order") Order order,
                               @ModelAttribute("cart") Cart cart,
                               Principal principal) {
@@ -81,7 +80,7 @@ public class OrderController {
     }
 
 
-    @GetMapping("/my")
+    @GetMapping("/orders/my")
     public String viewMyOrders(Model model, User user, Principal principal) {
         
         String email = principal.getName();
@@ -96,16 +95,25 @@ public class OrderController {
         return "my-orders"; // шаблон FTLH для отображения заказов пользователя
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/orders/admin")
     public String viewAllOrders(Model model) {
         List<Order> orders = orderService.getAllOrders();
         model.addAttribute("orders", orders);
-        return "redirect:/orders/admin"; // шаблон FTLH для отображения всех заказов
+        return "redirect:/admin/orders"; // шаблон FTLH для отображения всех заказов
     }
 
-    @PostMapping("/update-status")
+    @PostMapping("/orders/update-status")
     public String updateOrderStatus(@RequestParam Long orderId, @RequestParam String status) {
         orderService.updateOrderStatus(orderId, status);
-        return "redirect:/orders/admin";
+        return "redirect:/admin/orders";
+    }
+    
+    @PostMapping("/orders/delete")
+    public String deleteOrder(@RequestParam Long orderId) {
+        orderService.deleteOrder(orderId);
+
+        logger.info("Order deleted with orderId: {}", orderId);
+
+        return "redirect:/admin/orders";
     }
 }

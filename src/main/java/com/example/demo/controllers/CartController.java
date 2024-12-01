@@ -7,6 +7,8 @@ import com.example.demo.serveces.HistoryService;
 import com.example.demo.serveces.OrderService;
 import com.example.demo.models.Order;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,7 @@ public class CartController {
     private final CartService cartService;
     private final UserService userService;
     private final OrderService orderService;
+    private static final Logger logger = LoggerFactory.getLogger(CartController.class);
     
     @GetMapping("/cart")
     public String get(Model model, Principal principal) {
@@ -76,6 +79,7 @@ public class CartController {
             Principal principal) {
         System.out.println("Купили корзину");
         Long userId = userService.getUserId(principal);
+        logger.info("Attempting to buy cart for user ID: {}", userId);
         boolean success = cartService.buyCart(customerName, address, paymentMethod, email);
         if (success) {
             // Create a new order
@@ -93,17 +97,25 @@ public class CartController {
             order.setStatus("В обработке");
             order.setBookTitles(bookTitles.toString());
             orderService.createOrder(order);
+            logger.info("Order created for user ID: {}", userId);
+            logger.info("Order details: {}", order);
             return "redirect:/success";
         } else {
+            logger.warn("Failed to buy cart for user ID: {}", userId);
             return "redirect:/cart";
         }
     }
 
     @GetMapping("/checkout")
     public String checkout(Model model, Principal principal) {
+        Long userId = userService.getUserId(principal);
+        logger.info("Checking out for user ID: {}", userId);
         model.addAttribute("role", userService.getUserRole(principal));
         model.addAttribute("userId", userService.getUserId(principal));
         List<Cart> carts = cartService.getAll();
+        for (Cart cart : carts) {
+            logger.info("Cart item: {}", cart);
+        }
         model.addAttribute("carts", carts);
         return "checkout";
     }

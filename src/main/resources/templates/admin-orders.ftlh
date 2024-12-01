@@ -15,7 +15,7 @@
             <a href="/admin" class="btn btn-outline-secondary">Назад к панели управления</a>
         </div>
         <h1 class="mb-4">Управление заказами</h1>
-        <table class="table table-bordered table-hover">
+         <table class="table table-bordered table-hover">
             <thead class="table-light">
                 <tr>
                     <th>ID</th>
@@ -48,6 +48,14 @@
                                 </select>
                                 <input type="hidden" name="_csrf" value="${_csrf.token}">
                                 <button type="submit" class="btn btn-outline-primary btn-sm mt-2">Обновить статус</button>
+                            </form>
+                            
+                        </td>
+                        <td>
+                        <form action="/orders/delete" method="post" class="d-inline">
+                                <input type="hidden" name="orderId" value="${order.id}">
+                                <input type="hidden" name="_csrf" value="${_csrf.token}">
+                                <button type="submit" class="btn btn-outline-danger btn-sm mt-2">Удалить</button>
                             </form>
                         </td>
                     </tr>

@@ -70,11 +70,17 @@ public class CartService {
         List<Cart> cartItems = cartRepository.findAllByUser_id(userId.intValue());
 
         if (cartItems.isEmpty()) {
+            log.warn("Cart is empty for user ID: {}", userId);
             return false;
         }
 
         // Process the purchase
         for (Cart cartItem : cartItems) {
+            if (cartItem == null) {
+                log.warn("Encountered null cart item for user ID: {}", userId);
+                continue;
+            }
+            log.info("Processing cart item: {}", cartItem);
             // Create a new order entry
             Order order = new Order();
             order.setCustomerName(customerName);

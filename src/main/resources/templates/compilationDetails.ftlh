@@ -21,6 +21,7 @@
     </header>
     <main class="d-grid gap-5 py-5 mx-auto" style="width: 900px;">
         <div class="w-100 d-flex justify-content-end">
+            <#if role??>
             <#if role=="ROLE_ADMIN">
             <div class="d-flex">
                 <a class="btn btn-secondary me-2" href="/compilations/edit/${compilation.id}" class="btn btn-warning">Edit</a>
@@ -29,6 +30,7 @@
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
                 </div>
+            </#if>
             </#if>
         </div>
         <section class="text-center container">
